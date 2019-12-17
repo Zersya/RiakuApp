@@ -4,6 +4,7 @@ import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
+import 'package:riaku_app/utils/funcCommon.dart';
 import 'package:riaku_app/utils/router.dart';
 
 class FormStatus extends StatelessWidget {
@@ -25,7 +26,7 @@ class FormStatus extends StatelessWidget {
             children: <Widget>[
               CircleAvatar(
                 backgroundImage: NetworkImage(
-                    "https://wiki.d-addicts.com/images/thumb/4/4c/IU.jpg/220px-IU.jpg"),
+                    generateAvatar(_dashboardBloc.user.id)),
               ),
               SizedBox(width: 16),
               Expanded(

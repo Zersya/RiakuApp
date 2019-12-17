@@ -5,6 +5,7 @@ class ItemPost extends StatelessWidget {
   const ItemPost(
       {Key key,
       @required this.username,
+      @required this.profileImage,
       @required this.imgStatus,
       @required this.description,
       @required this.timestamp,
@@ -15,6 +16,7 @@ class ItemPost extends StatelessWidget {
   final String imgStatus;
   final String description;
   final String timestamp;
+  final String profileImage;
   final bool isUpload;
 
   @override
@@ -55,7 +57,7 @@ class ItemPost extends StatelessWidget {
               children: <Widget>[
                 CircleAvatar(
                   backgroundImage: NetworkImage(
-                      "https://wiki.d-addicts.com/images/thumb/4/4c/IU.jpg/220px-IU.jpg"),
+                      this.profileImage),
                 ),
                 Expanded(
                   child: ListTile(

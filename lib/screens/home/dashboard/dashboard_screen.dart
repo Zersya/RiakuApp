@@ -5,6 +5,8 @@ import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/itemPost.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
+import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:riaku_app/utils/strKey.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -84,6 +86,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             print(snapshot.data);
                             if (!snapshot.hasData) return ShimmerLoading();
                             return ItemPost(
+                              profileImage:
+                                  generateAvatar(currentList[index].user.id),
                               isUpload: index < snapshot.data,
                               username: currentList[index].user.username,
                               description: currentList[index].description,
