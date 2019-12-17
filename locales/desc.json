@@ -1,0 +1,43 @@
+{
+  "auth": {
+    "forgotPassword": "forgotPassword Label",
+    "login": "login label",
+    "register": "register label"
+  },
+  "common": {
+    "back": "back label",
+    "uploading": "uploading label"
+  },
+  "dashboard": {
+    "dashboard": "dashboard label",
+    "likesLabel": "label likes",
+    "commentsLabel": "label comments"
+  },
+  "error": {
+    "exceptionError": "something wrong messages",
+    "connectionError": "error message while no connection",
+    "emailRegisteredError": "Email already registered message",
+    "emailEmpty": "email empty error message",
+    "passwordEmpty": "password cant be empty",
+    "passwordMin": "password minimal 6 character",
+    "emailValid": "Email is not valid message"
+  },
+  "home": {
+    "home": "Home Label",
+    "toAccount": "label button to account",
+    "toNotification": "label button to notification",
+    "toClass": "label button to class",
+    "toSetting": "label button to setting",
+    "toVerify": "label button to verify",
+    "toAdd": "label button to add"
+  },
+  "post": {
+    "createPostLabel": "creating post",
+    "hintPost": "hint for form post",
+    "sendLabel": "label send"
+  },
+  "success": {
+    "successCreate": "success creating/adding data to form",
+    "successLogin": "success login auth"
+  }
+}

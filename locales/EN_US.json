@@ -1,0 +1,43 @@
+{
+  "auth": {
+    "forgotPassword": "Forgot password?",
+    "login": "Login",
+    "register": "Register"
+  },
+  "common": {
+    "back": "Back",
+    "uploading": "Uploading"
+  },
+  "dashboard": {
+    "dashboard": "Dashboard",
+    "likesLabel": "Like",
+    "commentsLabel": "Comments"
+  },
+  "error": {
+    "exceptionError": "There is an error",
+    "connectionError": "Connection error",
+    "emailRegisteredError": "Email already registered",
+    "emailEmpty": "Email can't be empty",
+    "passwordEmpty": "Password can't be empty",
+    "passwordMin": "Password must be at least 6 characters",
+    "emailValid": "Email is not valid"
+  },
+  "home": {
+    "home": "Riaku",
+    "toAccount": "To Account",
+    "toNotification": "To Notification",
+    "toClass": "To Class",
+    "toSetting": "To Setting",
+    "toVerify": "To Verification",
+    "toAdd": "To Add"
+  },
+  "post": {
+    "createPostLabel": "Create Post",
+    "hintPost": "What you want to RIA?",
+    "sendLabel": "Send"
+  },
+  "success": {
+    "successCreate": "Create succress",
+    "successLogin": "Success login"
+  }
+}

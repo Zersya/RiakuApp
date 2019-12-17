@@ -1,0 +1,43 @@
+{
+  "auth": {
+    "forgotPassword": "Lupa password?",
+    "login": "Masuk",
+    "register": "Daftar"
+  },
+  "common": {
+    "back": "Kembali",
+    "uploading": "Mengunggah"
+  },
+  "dashboard": {
+    "dashboard": "Beranda",
+    "likesLabel": "Suka",
+    "commentsLabel": "Komentar"
+  },
+  "error": {
+    "exceptionError": "Terjadi kesalahan",
+    "connectionError": "Kesalahan pada koneksi",
+    "emailRegisteredError": "Email sudah terdaftar",
+    "emailEmpty": "Email tidak boleh kosong",
+    "passwordEmpty": "Password tidak boleh kosong",
+    "passwordMin": "Password minimal 6 karakter",
+    "emailValid": "Email tidak valid"
+  },
+  "home": {
+    "home": "Riaku",
+    "toAccount": "Ke Akun",
+    "toNotification": "Ke Notifikasi",
+    "toClass": "Ke Kelas",
+    "toSetting": "Ke Pengaturan",
+    "toVerify": "Ke Vertifikasi",
+    "toAdd": "Ke Tambah"
+  },
+  "post": {
+    "createPostLabel": "Buat Postingan",
+    "hintPost": "Apa yang kamu RIAkan?",
+    "sendLabel": "Kirim"
+  },
+  "success": {
+    "successCreate": "Berhasil terbuat",
+    "successLogin": "Sukses login"
+  }
+}
