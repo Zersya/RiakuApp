@@ -10,11 +10,32 @@ import 'package:riaku_app/utils/my_response.dart';
 class PostService {
   Firestore _firestore = Firestore.instance;
 
-  Future<MyResponse> createPost(Post post) async {
+  Future<MyResponse> likePost(Post post) async {
     try {
+      
       await _firestore
           .collection('posts')
-          .document()
+          .document(post.id)
+          .setData(post.toMap());
+
+      return MyResponse(ResponseState.SUCCESS, post,
+          message: LocDelegate.currentLoc.success.successCreate);
+    } on SocketException {
+      return MyResponse(ResponseState.ERROR, null,
+          message: LocDelegate.currentLoc.error.connectionError);
+    } on Exception {
+      return MyResponse(ResponseState.ERROR, null,
+          message: LocDelegate.currentLoc.error.exceptionError);
+    }
+  }
+
+  Future<MyResponse> createPost(Post post) async {
+    try {
+      post.id = _firestore.collection('posts').document().documentID;
+
+      await _firestore
+          .collection('posts')
+          .document(post.id)
           .setData(post.toMap());
 
       return MyResponse(ResponseState.SUCCESS, post,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
 import 'package:riaku_app/utils/funcCommon.dart';
@@ -24,10 +25,16 @@ class FormStatus extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: NetworkImage(
-                    generateAvatar(_dashboardBloc.user.id)),
-              ),
+              StreamBuilder<User>(
+                  stream: _dashboardBloc.userStream,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData)
+                      return CircleAvatar(
+                        backgroundImage:
+                            NetworkImage(generateAvatar(snapshot.data.id)),
+                      );
+                    return Container();
+                  }),
               SizedBox(width: 16),
               Expanded(
                   child: OutlineButton(
@@ -44,9 +51,11 @@ class FormStatus extends StatelessWidget {
                   Navigator.pushNamed(context, Router.kRouteAddPost,
                           arguments: _createPostBloc)
                       .then((val) {
-                    Post post = val;
-                    post.user = _dashboardBloc.user;
-                    _dashboardBloc.setListData(post);
+                    if (val != null) {
+                      Post post = val;
+                      post.user = _dashboardBloc.user;
+                      _dashboardBloc.setListData(post);
+                    }
                   });
                 },
                 child: Text(

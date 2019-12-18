@@ -10,7 +10,7 @@
   },
   "dashboard": {
     "dashboard": "Dashboard",
-    "likesLabel": "Like",
+    "likesLabel": "Claps",
     "commentsLabel": "Comments"
   },
   "error": {

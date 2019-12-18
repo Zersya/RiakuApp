@@ -5,8 +5,6 @@ import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/itemPost.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
-import 'package:riaku_app/utils/strKey.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -38,9 +36,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void dispose() {
-    _createPostBloc.dispose();
-    _dashboardBloc.dispose();
     super.dispose();
+    _createPostBloc.dispose();
+    // _dashboardBloc.dispose();
   }
 
   @override
@@ -83,16 +81,13 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           stream: _dashboardBloc.onUploadIdxStream,
                           initialData: 0,
                           builder: (context, snapshot) {
-                            print(snapshot.data);
                             if (!snapshot.hasData) return ShimmerLoading();
-                            return ItemPost(
-                              profileImage:
-                                  generateAvatar(currentList[index].user.id),
-                              isUpload: index < snapshot.data,
-                              username: currentList[index].user.username,
-                              description: currentList[index].description,
-                              timestamp: currentList[index].createdAt,
-                              imgStatus: "",
+                            return Provider.value(
+                              value: _dashboardBloc,
+                              child: ItemPost(
+                                  isUpload: index < snapshot.data,
+                                  user: currentList[index].user,
+                                  post: currentList[index]),
                             );
                           });
                     },

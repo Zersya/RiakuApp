@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
 import 'package:riaku_app/generated/locale_base.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/models/user.dart';
+import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
+import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ItemPost extends StatelessWidget {
   const ItemPost(
       {Key key,
-      @required this.username,
-      @required this.profileImage,
-      @required this.imgStatus,
-      @required this.description,
-      @required this.timestamp,
+      @required this.user,
+      @required this.post,
       @required this.isUpload})
       : super(key: key);
 
-  final String username;
-  final String imgStatus;
-  final String description;
-  final String timestamp;
-  final String profileImage;
+  final Post post;
+  final User user;
   final bool isUpload;
 
   @override
   Widget build(BuildContext context) {
     final loc = Localizations.of<LocaleBase>(context, LocaleBase);
+    final timePost =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(post.createdAt));
+
+    final DashboardBloc _dashboardBloc = Provider.of<DashboardBloc>(context);
+    final myLike = _dashboardBloc.yourLike(post);
 
     return Container(
       color: Colors.white,
@@ -56,17 +62,16 @@ class ItemPost extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(
-                      this.profileImage),
+                  backgroundImage: NetworkImage(generateAvatar(user.id)),
                 ),
                 Expanded(
                   child: ListTile(
                     title: Text(
-                      this.username,
+                      user.username,
                       style: Theme.of(context).textTheme.subhead,
                     ),
                     subtitle: Text(
-                      '10 Menit',
+                      timeago.format(timePost),
                       style: Theme.of(context).textTheme.subtitle,
                     ),
                   ),
@@ -74,15 +79,15 @@ class ItemPost extends StatelessWidget {
               ],
             ),
           ),
-          if (imgStatus.isNotEmpty)
+          if (post.imgUrl.isNotEmpty)
             Image.network(
-              this.imgStatus,
+              this.post.imgUrl,
               fit: BoxFit.cover,
             ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
             child: Text(
-              description,
+              post.description,
               style: Theme.of(context).textTheme.body1,
             ),
           ),
@@ -91,9 +96,23 @@ class ItemPost extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Text(
-                  '100 ${loc.dashboard.likesLabel}',
-                  style: Theme.of(context).textTheme.overline,
+                Row(
+                  children: <Widget>[
+                    Text(
+                      '${post.likes?.length ?? 0} ${loc.dashboard.likesLabel}',
+                      style: Theme.of(context).textTheme.overline,
+                    ),
+                    SizedBox(
+                      width: 8,
+                    ),
+                    if (myLike > 0)
+                      Text(
+                        '+${myLike} ${loc.dashboard.likesLabel}',
+                        style: Theme.of(context).textTheme.overline.copyWith(
+                            color: Theme.of(context).colorScheme.primaryVariant,
+                            fontWeight: FontWeight.bold),
+                      ),
+                  ],
                 ),
                 Text('100 ${loc.dashboard.commentsLabel}',
                     style: Theme.of(context).textTheme.overline)
@@ -111,8 +130,13 @@ class ItemPost extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                     flex: 1,
-                    child: Icon(
-                      Icons.thumb_up,
+                    child: InkWell(
+                      onTap: () {
+                        _dashboardBloc.likePost(post);
+                      },
+                      child: Icon(
+                        FontAwesomeIcons.signLanguage,
+                      ),
                     )),
                 Expanded(
                     flex: 1,

@@ -29,6 +29,8 @@ class LoginBloc extends BaseReponseBloc<FormState> {
     MyResponse response = await _authService.loginUser(user);
     if (response.responseState == ResponseState.SUCCESS) {
       SharedPreferences pref = await SharedPreferences.getInstance();
+
+      print(response.result.id);
       pref.setString(kEmailKey, response.result.email);
       pref.setString(kIdKey, response.result.id);
       pref.setString(kUsernameKey, response.result.username);

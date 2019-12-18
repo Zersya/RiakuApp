@@ -3,8 +3,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riaku_app/utils/loc_delegate.dart';
 import 'package:riaku_app/utils/router.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
-void main() => runApp(MyApp());
+void main() {
+  timeago.setLocaleMessages('id', timeago.IdMessages());
+  timeago.setLocaleMessages('en', timeago.EnMessages());
+
+
+  return runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   static final ColorScheme _colorSchemeLight = ColorScheme.light(
@@ -25,15 +32,21 @@ class MyApp extends StatelessWidget {
 
   static final TextTheme _textTheme = TextTheme(
     headline: GoogleFonts.roboto(fontSize: 32, fontWeight: FontWeight.bold),
-    title: GoogleFonts.varelaRound(fontSize: 21, fontWeight: FontWeight.bold, textStyle: TextStyle(color: _colorSchemeLight.primary)),
+    title: GoogleFonts.varelaRound(
+        fontSize: 21,
+        fontWeight: FontWeight.bold,
+        textStyle: TextStyle(color: _colorSchemeLight.primary)),
     subhead: GoogleFonts.varelaRound(fontSize: 16, fontWeight: FontWeight.bold),
     subtitle:
         GoogleFonts.varelaRound(textStyle: TextStyle(color: Colors.grey[500])),
     body1: GoogleFonts.varelaRound(fontSize: 16),
-    body2: GoogleFonts.roboto(fontSize: 16, textStyle: TextStyle(color: _colorSchemeLight.onSurface)),    
+    body2: GoogleFonts.roboto(
+        fontSize: 16, textStyle: TextStyle(color: _colorSchemeLight.onSurface)),
     overline:
         GoogleFonts.varelaRound(textStyle: TextStyle(color: Colors.grey[500])),
-    button: GoogleFonts.lato(fontSize: 14, textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+    button: GoogleFonts.lato(
+        fontSize: 14,
+        textStyle: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
   );
 
   final ThemeData _themeData = ThemeData(
