@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:Riaku/models/post.dart';
-import 'package:Riaku/screens/home/dashboard/dashboard_bloc.dart';
-import 'package:Riaku/screens/home/dashboard/widgets/formPost.dart';
-import 'package:Riaku/screens/home/dashboard/widgets/itemPost.dart';
-import 'package:Riaku/screens/post/createPost/createPost_bloc.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
+import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
+import 'package:riaku_app/screens/home/dashboard/widgets/itemPost.dart';
+import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
 class DashboardScreen extends StatefulWidget {

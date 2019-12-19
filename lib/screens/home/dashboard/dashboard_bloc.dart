@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Riaku/models/post.dart';
-import 'package:Riaku/models/user.dart';
-import 'package:Riaku/services/post_service.dart';
-import 'package:Riaku/utils/my_response.dart';
-import 'package:Riaku/utils/strKey.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/models/user.dart';
+import 'package:riaku_app/services/post_service.dart';
+import 'package:riaku_app/utils/my_response.dart';
+import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:Riaku/screens/auth/auth_screen.dart';
-import 'package:Riaku/screens/auth/login/login_screen.dart';
-import 'package:Riaku/screens/auth/register/register_screen.dart';
-import 'package:Riaku/screens/post/createPost/createPost_screen.dart';
-import 'package:Riaku/screens/home/home_screen.dart';
-import 'package:Riaku/screens/splash/splash_screen.dart';
+import 'package:riaku_app/screens/auth/auth_screen.dart';
+import 'package:riaku_app/screens/auth/login/login_screen.dart';
+import 'package:riaku_app/screens/auth/register/register_screen.dart';
+import 'package:riaku_app/screens/post/createPost/createPost_screen.dart';
+import 'package:riaku_app/screens/home/home_screen.dart';
+import 'package:riaku_app/screens/splash/splash_screen.dart';
 
 class Router {
   static const kRouteSplash = '/splash';

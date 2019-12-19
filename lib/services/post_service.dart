@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:Riaku/models/post.dart';
-import 'package:Riaku/utils/enum.dart';
-import 'package:Riaku/utils/loc_delegate.dart';
-import 'package:Riaku/utils/my_response.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/utils/enum.dart';
+import 'package:riaku_app/utils/loc_delegate.dart';
+import 'package:riaku_app/utils/my_response.dart';
 
 class PostService {
   Firestore _firestore = Firestore.instance;

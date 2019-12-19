@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:Riaku/utils/router.dart';
-import 'package:Riaku/utils/strKey.dart';
+import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/utils/strKey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {

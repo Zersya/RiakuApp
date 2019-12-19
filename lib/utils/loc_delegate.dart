@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:Riaku/generated/locale_base.dart';
+import 'package:riaku_app/generated/locale_base.dart';
 
 class LocDelegate extends LocalizationsDelegate<LocaleBase> {
   const LocDelegate();
