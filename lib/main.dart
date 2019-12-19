@@ -83,7 +83,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [const Locale('en'), const Locale('id')],
       theme: _themeData,
       onGenerateRoute: Router.generateRoute,
-      initialRoute: Router.kRouteHome,
+      initialRoute: Router.kRouteAuth,
     );
   }
 }

@@ -23,6 +23,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   void initState() {
     super.initState();
     _createPostBloc = widget.createPostBloc;
+
+    _createPostBloc.fetchLocation();
+
     if (Platform.isAndroid) {
       _subscription = Connectivity()
           .onConnectivityChanged
@@ -89,7 +92,11 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                     _createPostBloc.submitPost(_controllerDesc.text, '',
                         DateTime.now().millisecondsSinceEpoch.toString());
 
-                    Post post = Post(null, _controllerDesc.text, '',
+                    Post post = Post(
+                        _createPostBloc.currentLocation.locality,
+                        null,
+                        _controllerDesc.text,
+                        '',
                         DateTime.now().millisecondsSinceEpoch.toString());
                     Navigator.pop(context, post);
                   }

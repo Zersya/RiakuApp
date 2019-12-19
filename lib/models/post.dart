@@ -8,8 +8,9 @@ class Post {
   final String description;
   final String imgUrl;
   final String createdAt;
+  final String location;
 
-  Post(this.user, this.description, this.imgUrl, this.createdAt,
+  Post(this.location, this.user, this.description, this.imgUrl, this.createdAt,
       {this.id, this.likes});
 
   void setUser(User user) {
@@ -22,6 +23,7 @@ class Post {
 
   factory Post.formMap(Map<String, dynamic> map) {
     return Post(
+      map['location'],
       User.fromMap(map['user']),
       map['description'],
       map['imgUrl'],
@@ -33,6 +35,7 @@ class Post {
 
   Map<String, dynamic> toMap() => {
         'id': this.id,
+        'location': this.location,
         'user': this.user.toMap(),
         'description': this.description,
         'imgUrl': this.imgUrl,

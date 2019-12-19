@@ -70,9 +70,18 @@ class ItemPost extends StatelessWidget {
                       user.username,
                       style: Theme.of(context).textTheme.subhead,
                     ),
-                    subtitle: Text(
-                      timeago.format(timePost),
-                      style: Theme.of(context).textTheme.subtitle,
+                    subtitle: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          timeago.format(timePost),
+                          style: Theme.of(context).textTheme.subtitle,
+                        ),
+                        Text(
+                          post.location ?? '-',
+                          style: Theme.of(context).textTheme.subtitle,
+                        ),
+                      ],
                     ),
                   ),
                 )
@@ -107,7 +116,7 @@ class ItemPost extends StatelessWidget {
                     ),
                     if (myLike > 0)
                       Text(
-                        '+${myLike} ${loc.dashboard.likesLabel}',
+                        '+$myLike ${loc.dashboard.likesLabel}',
                         style: Theme.of(context).textTheme.overline.copyWith(
                             color: Theme.of(context).colorScheme.primaryVariant,
                             fontWeight: FontWeight.bold),
@@ -136,6 +145,9 @@ class ItemPost extends StatelessWidget {
                       },
                       child: Icon(
                         FontAwesomeIcons.signLanguage,
+                        color: myLike > 0
+                            ? Theme.of(context).colorScheme.primaryVariant
+                            : Colors.grey,
                       ),
                     )),
                 Expanded(

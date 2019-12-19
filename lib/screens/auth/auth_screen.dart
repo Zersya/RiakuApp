@@ -5,6 +5,8 @@ import 'package:riaku_app/screens/auth/login/login_screen.dart';
 import 'package:riaku_app/screens/auth/register/register_screen.dart';
 import 'package:riaku_app/utils/enum.dart';
 import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/utils/strKey.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'login/login_bloc.dart';
 import 'register/register_bloc.dart';
@@ -27,6 +29,12 @@ class _AuthScreenState extends State<AuthScreen> {
   @override
   void initState() {
     super.initState();
+
+    SharedPreferences.getInstance().then((val){
+      if(val.getString(kIdKey) != null){
+        Navigator.pushReplacementNamed(context, Router.kRouteHome);
+      }
+    });
 
     _loginBloc.subjectResponse.listen((val) {
       if (val.responseState == ResponseState.SUCCESS) {
@@ -60,47 +68,49 @@ class _AuthScreenState extends State<AuthScreen> {
     return Scaffold(
         key: _scaffoldKey,
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          indexForm = 0;
-                        });
-                      },
-                      child: ButtonSelectAuth(indexForm: indexForm, mode: 0),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            indexForm = 0;
+                          });
+                        },
+                        child: ButtonSelectAuth(indexForm: indexForm, mode: 0),
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        setState(() {
-                          indexForm = 1;
-                        });
-                      },
-                      child: ButtonSelectAuth(indexForm: indexForm, mode: 1),
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              IndexedStack(
-                index: indexForm,
-                children: <Widget>[
-                  Provider.value(value: _loginBloc, child: LoginScreen()),
-                  Provider.value(value: _registerBloc, child: RegisterScreen()),
-                ],
-              ),
-            ],
+                    Expanded(
+                      flex: 1,
+                      child: InkWell(
+                        onTap: () {
+                          setState(() {
+                            indexForm = 1;
+                          });
+                        },
+                        child: ButtonSelectAuth(indexForm: indexForm, mode: 1),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                IndexedStack(
+                  index: indexForm,
+                  children: <Widget>[
+                    Provider.value(value: _loginBloc, child: LoginScreen()),
+                    Provider.value(value: _registerBloc, child: RegisterScreen()),
+                  ],
+                ),
+              ],
+            ),
           ),
         ));
   }

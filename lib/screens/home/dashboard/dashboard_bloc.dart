@@ -1,4 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/post_service.dart';
@@ -77,13 +79,7 @@ class DashboardBloc extends BaseReponseBloc {
   }
 
   void fetchData() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String email = pref.getString(kEmailKey);
-    String id = pref.getString(kIdKey);
-    String username = pref.getString(kUsernameKey);
-
-    _user = User(email, id: id, username: username);
-    _subjectUser.sink.add(_user);
+    fetchUser();
 
     MyResponse<Stream<QuerySnapshot>> response = await _servicePost.fetchPost();
     response.result.listen((val) {
@@ -96,6 +92,17 @@ class DashboardBloc extends BaseReponseBloc {
     });
   }
 
+  void fetchUser() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String email = pref.getString(kEmailKey);
+    String id = pref.getString(kIdKey);
+    String username = pref.getString(kUsernameKey);
+
+    _user = User(email, id: id, username: username);
+    _subjectUser.sink.add(_user);
+  }
+
+  
   @override
   void dispose() {
     super.dispose();

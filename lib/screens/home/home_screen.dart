@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_screen.dart';
 import 'package:riaku_app/screens/profile/profile_screen.dart';
-import 'package:riaku_app/utils/router.dart';
-import 'package:riaku_app/utils/strKey.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
@@ -21,11 +18,6 @@ class HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
 
-    SharedPreferences.getInstance().then((val){
-      if(val.getString(kIdKey) == null){
-        Navigator.pushReplacementNamed(context, Router.kRouteAuth);
-      }
-    });
   }
 
   @override
