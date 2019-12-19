@@ -1,4 +1,4 @@
-import 'package:riaku_app/utils/enum.dart';
+import 'package:Riaku/utils/enum.dart';
 import 'package:rxdart/rxdart.dart';
 
 class MyResponse<T> {

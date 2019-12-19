@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riaku_app/utils/loc_delegate.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:Riaku/utils/loc_delegate.dart';
+import 'package:Riaku/utils/router.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-void main() {
+import 'screens/splash/splash_screen.dart';
+
+void main() async {
   timeago.setLocaleMessages('id', timeago.IdMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
 
-
+  
   return runApp(MyApp());
 }
 
@@ -74,7 +76,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'RIAKU',
       localizationsDelegates: [
         const LocDelegate(),
         GlobalMaterialLocalizations.delegate,
@@ -83,7 +85,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: [const Locale('en'), const Locale('id')],
       theme: _themeData,
       onGenerateRoute: Router.generateRoute,
-      initialRoute: Router.kRouteAuth,
+      // initialRoute: Router.kRouteSplash,
+      home: SplashScreen(),
     );
   }
 }

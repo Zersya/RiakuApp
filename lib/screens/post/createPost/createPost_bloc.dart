@@ -1,10 +1,10 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:geocoder/geocoder.dart';
-import 'package:riaku_app/models/post.dart';
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/services/post_service.dart';
-import 'package:riaku_app/utils/my_response.dart';
-import 'package:riaku_app/utils/strKey.dart';
+import 'package:Riaku/models/post.dart';
+import 'package:Riaku/models/user.dart';
+import 'package:Riaku/services/post_service.dart';
+import 'package:Riaku/utils/my_response.dart';
+import 'package:Riaku/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +15,7 @@ class CreatePostBloc extends BaseReponseBloc {
   BehaviorSubject<bool> _subjectIsConnect;
   BehaviorSubject<bool> _subjectIsNotEmpty;
 
-  Address _currentLocation;
+  Address _currentLocation = Address();
 
   User user;
 
@@ -54,6 +54,7 @@ class CreatePostBloc extends BaseReponseBloc {
   void fetchLocation() async {
     Position location = await Geolocator()
         .getLastKnownPosition(desiredAccuracy: LocationAccuracy.medium);
+    print(location);
     final coordinates = new Coordinates(location.latitude, location.longitude);
     final addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
@@ -68,8 +69,7 @@ class CreatePostBloc extends BaseReponseBloc {
     String username = pref.getString(kUsernameKey);
 
     User user = User(email, id: id, username: username);
-    Post post =
-        Post(_currentLocation.locality, user, desc, imgUrl, timeEpoch);
+    Post post = Post(_currentLocation.locality, user, desc, imgUrl, timeEpoch);
 
     MyResponse response = await _servicePost.createPost(post);
     this.subjectResponse.sink.add(response);

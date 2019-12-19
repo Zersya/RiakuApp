@@ -2,11 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:riaku_app/generated/locale_base.dart';
-import 'package:riaku_app/models/post.dart';
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:Riaku/generated/locale_base.dart';
+import 'package:Riaku/models/post.dart';
+import 'package:Riaku/models/user.dart';
+import 'package:Riaku/screens/home/dashboard/dashboard_bloc.dart';
+import 'package:Riaku/utils/funcCommon.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ItemPost extends StatelessWidget {
@@ -71,11 +71,12 @@ class ItemPost extends StatelessWidget {
                       user.username,
                       style: Theme.of(context).textTheme.subhead,
                     ),
-                    subtitle: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    subtitle: Wrap(
+                      direction: Axis.horizontal,
+                      alignment: WrapAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          timeago.format(timePost),
+                          timeago.format(timePost) ?? '-',
                           style: Theme.of(context).textTheme.subtitle,
                         ),
                         Text(
