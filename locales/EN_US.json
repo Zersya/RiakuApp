@@ -23,7 +23,7 @@
     "emailValid": "Email is not valid"
   },
   "home": {
-    "home": "Riaku",
+    "home": "riaku_app",
     "toAccount": "To Account",
     "toNotification": "To Notification",
     "toClass": "To Class",

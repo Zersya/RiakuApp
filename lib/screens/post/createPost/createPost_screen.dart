@@ -3,11 +3,11 @@ import 'dart:io' show Platform;
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:Riaku/generated/locale_base.dart';
+import 'package:riaku_app/generated/locale_base.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:Riaku/models/post.dart';
-import 'package:Riaku/screens/post/createPost/createPost_bloc.dart';
-import 'package:Riaku/utils/funcCommon.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
+import 'package:riaku_app/utils/funcCommon.dart';
 
 class CreatePostScreen extends StatefulWidget {
   CreatePostScreen({Key key, @required this.createPostBloc}) : super(key: key);

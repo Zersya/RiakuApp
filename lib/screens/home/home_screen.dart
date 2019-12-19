@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:Riaku/generated/locale_base.dart';
-import 'package:Riaku/screens/home/dashboard/dashboard_screen.dart';
-import 'package:Riaku/screens/profile/profile_screen.dart';
+import 'package:riaku_app/generated/locale_base.dart';
+import 'package:riaku_app/screens/home/dashboard/dashboard_screen.dart';
+import 'package:riaku_app/screens/profile/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);

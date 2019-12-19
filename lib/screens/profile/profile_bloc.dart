@@ -1,5 +1,5 @@
-import 'package:Riaku/models/user.dart';
-import 'package:Riaku/utils/strKey.dart';
+import 'package:riaku_app/models/user.dart';
+import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
