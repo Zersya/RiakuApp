@@ -1,4 +1,4 @@
-import 'package:riaku_app/models/user.dart';
+import 'package:Riaku/models/user.dart';
 
 class Post {
   User user;

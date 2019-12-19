@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/screens/profile/profile_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:Riaku/models/user.dart';
+import 'package:Riaku/screens/profile/profile_bloc.dart';
+import 'package:Riaku/utils/funcCommon.dart';
+import 'package:Riaku/utils/router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {

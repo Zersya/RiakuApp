@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:riaku_app/generated/locale_base.dart';
-import 'package:riaku_app/screens/auth/login/login_screen.dart';
-import 'package:riaku_app/screens/auth/register/register_screen.dart';
-import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:Riaku/generated/locale_base.dart';
+import 'package:Riaku/screens/auth/login/login_screen.dart';
+import 'package:Riaku/screens/auth/register/register_screen.dart';
+import 'package:Riaku/utils/enum.dart';
+import 'package:Riaku/utils/router.dart';
 
 import 'login/login_bloc.dart';
 import 'register/register_bloc.dart';

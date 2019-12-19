@@ -1,4 +1,4 @@
-package com.inersya.riaku_app
+package com.inersya.Riaku
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

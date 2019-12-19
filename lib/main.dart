@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:riaku_app/utils/loc_delegate.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:Riaku/utils/loc_delegate.dart';
+import 'package:Riaku/utils/router.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'screens/splash/splash_screen.dart';
