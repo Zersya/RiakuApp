@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -62,7 +63,7 @@ class ItemPost extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: NetworkImage(generateAvatar(user.id)),
+                  backgroundImage: CachedNetworkImageProvider(generateAvatar(user.id)),
                 ),
                 Expanded(
                   child: ListTile(
@@ -123,8 +124,8 @@ class ItemPost extends StatelessWidget {
                       ),
                   ],
                 ),
-                Text('100 ${loc.dashboard.commentsLabel}',
-                    style: Theme.of(context).textTheme.overline)
+                // Text('100 ${loc.dashboard.commentsLabel}',
+                //     style: Theme.of(context).textTheme.overline)
               ],
             ),
           ),
@@ -140,6 +141,7 @@ class ItemPost extends StatelessWidget {
                 Expanded(
                     flex: 1,
                     child: InkWell(
+                      
                       onTap: () {
                         _dashboardBloc.likePost(post);
                       },
@@ -150,11 +152,11 @@ class ItemPost extends StatelessWidget {
                             : Colors.grey,
                       ),
                     )),
-                Expanded(
-                    flex: 1,
-                    child: Icon(
-                      Icons.comment,
-                    ))
+                // Expanded(
+                //     flex: 1,
+                //     child: Icon(
+                //       Icons.comment,
+                //     ))
               ],
             ),
           )

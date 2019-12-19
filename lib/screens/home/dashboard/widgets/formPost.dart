@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:riaku_app/generated/locale_base.dart';
@@ -31,7 +32,7 @@ class FormStatus extends StatelessWidget {
                     if (snapshot.hasData)
                       return CircleAvatar(
                         backgroundImage:
-                            NetworkImage(generateAvatar(snapshot.data.id)),
+                            CachedNetworkImageProvider(generateAvatar(snapshot.data.id)),
                       );
                     return Container();
                   }),
@@ -68,22 +69,22 @@ class FormStatus extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0),
-            decoration: BoxDecoration(
-                shape: BoxShape.rectangle,
-                border: Border(
-                    top: BorderSide(
-                        color: Theme.of(context).colorScheme.onSurface))),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: Icon(Icons.add_a_photo),
-                ),
-              ],
-            ),
-          )
+          // Container(
+          //   padding: EdgeInsets.symmetric(vertical: 8.0),
+          //   decoration: BoxDecoration(
+          //       shape: BoxShape.rectangle,
+          //       border: Border(
+          //           top: BorderSide(
+          //               color: Theme.of(context).colorScheme.onSurface))),
+          //   child: Row(
+          //     children: <Widget>[
+          //       Expanded(
+          //         flex: 1,
+          //         child: Icon(Icons.add_a_photo),
+          //       ),
+          //     ],
+          //   ),
+          // )
         ],
       ),
     );

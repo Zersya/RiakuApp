@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:riaku_app/generated/locale_base.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
+import 'package:riaku_app/utils/funcCommon.dart';
 
 class CreatePostScreen extends StatefulWidget {
   CreatePostScreen({Key key, @required this.createPostBloc}) : super(key: key);
@@ -23,8 +25,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
   void initState() {
     super.initState();
     _createPostBloc = widget.createPostBloc;
-
-    _createPostBloc.fetchLocation();
+    print(_createPostBloc.currentLocation.locality);
 
     if (Platform.isAndroid) {
       _subscription = Connectivity()
@@ -125,12 +126,12 @@ class FormStatus extends StatelessWidget {
           Row(
             children: <Widget>[
               CircleAvatar(
-                backgroundImage: NetworkImage(
-                    "https://wiki.d-addicts.com/images/thumb/4/4c/IU.jpg/220px-IU.jpg"),
+                backgroundImage: CachedNetworkImageProvider(
+                    generateAvatar(createPostBloc.user.id)),
               ),
               SizedBox(width: 16),
               Text(
-                'IU',
+                createPostBloc.user.username,
                 style: Theme.of(context).textTheme.subhead,
               )
             ],
@@ -154,25 +155,25 @@ class FormStatus extends StatelessWidget {
           SizedBox(
             height: 15,
           ),
-          SafeArea(
-            bottom: true,
-            child: Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              decoration: BoxDecoration(
-                  shape: BoxShape.rectangle,
-                  border: Border(
-                      top: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface))),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    flex: 1,
-                    child: Icon(Icons.add_a_photo),
-                  ),
-                ],
-              ),
-            ),
-          )
+          // SafeArea(
+          //   bottom: true,
+          //   child: Container(
+          //     padding: EdgeInsets.symmetric(vertical: 8.0),
+          //     decoration: BoxDecoration(
+          //         shape: BoxShape.rectangle,
+          //         border: Border(
+          //             top: BorderSide(
+          //                 color: Theme.of(context).colorScheme.onSurface))),
+          //     child: Row(
+          //       children: <Widget>[
+          //         Expanded(
+          //           flex: 1,
+          //           child: Icon(Icons.add_a_photo),
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );

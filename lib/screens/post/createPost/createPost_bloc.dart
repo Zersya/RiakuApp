@@ -17,6 +17,8 @@ class CreatePostBloc extends BaseReponseBloc {
 
   Address _currentLocation;
 
+  User user;
+
   CreatePostBloc() {
     _servicePost = PostService();
     _subjectIsConnect = BehaviorSubject<bool>();
@@ -56,6 +58,7 @@ class CreatePostBloc extends BaseReponseBloc {
     final addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     _currentLocation = addresses.first;
+    print(_currentLocation.locality);
   }
 
   Future<Post> submitPost(String desc, String imgUrl, String timeEpoch) async {

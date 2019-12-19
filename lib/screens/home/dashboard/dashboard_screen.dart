@@ -30,6 +30,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ));
     });
     _dashboardBloc.fetchData();
+    _dashboardBloc.fetchUser().then((val) {
+      _createPostBloc.user = val;
+    });
+    _createPostBloc.fetchLocation();
 
     super.initState();
   }
