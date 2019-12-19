@@ -1,9 +1,9 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:riaku_app/generated/locale_base.dart';
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/utils/enum.dart' as Enum;
+import 'package:Riaku/generated/locale_base.dart';
+import 'package:Riaku/models/user.dart';
+import 'package:Riaku/utils/enum.dart' as Enum;
 
 import 'login_bloc.dart';
 

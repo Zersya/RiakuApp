@@ -1,8 +1,8 @@
 import 'package:faker/faker.dart';
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/services/auth_service.dart';
-import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/my_response.dart';
+import 'package:Riaku/models/user.dart';
+import 'package:Riaku/services/auth_service.dart';
+import 'package:Riaku/utils/enum.dart';
+import 'package:Riaku/utils/my_response.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 

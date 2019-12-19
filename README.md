@@ -1,4 +1,4 @@
-# riaku_app
+# Riaku
 
 A new Flutter project.
 
