@@ -132,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   prefixIcon: Icon(Icons.lock),
                                 ),
                                 onFieldSubmitted: (val) {
-                                  _submitRegister();
+                                  _submitLogin();
                                 },
                                 validator: (val) {
                                   if (val.isEmpty) {
@@ -156,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Text(loc.auth.login,
                                 style: Theme.of(context).textTheme.button),
                             onPressed: () {
-                              _submitRegister();
+                              _submitLogin();
                             },
                           ),
                         )
@@ -171,7 +171,7 @@ class _LoginScreenState extends State<LoginScreen> {
         });
   }
 
-  void _submitRegister() {
+  void _submitLogin() {
     if (_formKey.currentState.validate()) {
       FocusScope.of(context).unfocus();
       User user =

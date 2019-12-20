@@ -21,7 +21,7 @@ class RegisterBloc extends BaseReponseBloc<FormState> {
 
   ValueStream<User> get userStream => _subjectUser.stream;
 
-  void registerUser(User user) async {
+  Future registerUser(User user) async {
     this.subjectState.sink.add(FormState.LOADING);
 
     Faker faker = Faker();

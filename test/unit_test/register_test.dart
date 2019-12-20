@@ -14,8 +14,6 @@ import 'package:riaku_app/utils/locator.dart';
 import 'package:riaku_app/utils/my_response.dart';
 import 'package:riaku_app/utils/strCode.dart';
 
-import 'login_test.dart';
-
 class MockFirestore extends Mock implements Firestore {}
 
 class MockFirebaseAuth extends Mock implements FirebaseAuth {}
@@ -38,8 +36,6 @@ class MockDocumentSnapshotNULL extends Mock implements DocumentSnapshot {
   Map<String, dynamic> data;
 }
 
-
-
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -48,7 +44,6 @@ void main() {
   LocDelegate locDelegate;
 
   setUpAll(() {
-    
     firestore = MockFirestore();
     auth = MockFirebaseAuth();
 
@@ -88,8 +83,8 @@ void main() {
       stubDoc(MockDocumentSnapshotNULL());
       stubRegister(null);
 
-      bloc.registerUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.SUCCESS);
       expect(response.message, LocDelegate.currentLoc.success.successCreate);
@@ -104,11 +99,12 @@ void main() {
       stubDoc(MockDocumentSnapshot());
       stubRegister(null);
 
-      bloc.registerUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
-      expect(response.message, LocDelegate.currentLoc.error.emailRegisteredError);
+      expect(
+          response.message, LocDelegate.currentLoc.error.emailRegisteredError);
       expect(bloc.stateStream, emits(FormState.IDLE));
 
       bloc.dispose();
@@ -118,11 +114,12 @@ void main() {
       RegisterBloc bloc = RegisterBloc();
 
       stubRegisterErr(PlatformException(
-          code: kEmailRegisteredCode, message: LocDelegate.currentLoc.error.emailRegisteredError));
+          code: kEmailRegisteredCode,
+          message: LocDelegate.currentLoc.error.emailRegisteredError));
       stubDoc(MockDocumentSnapshot());
 
-      bloc.registerUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(bloc.stateStream, emits(FormState.IDLE));
@@ -137,8 +134,8 @@ void main() {
           SocketException(LocDelegate.currentLoc.error.connectionError));
       stubDoc(MockDocumentSnapshotNULL());
 
-      bloc.registerUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(response.message, LocDelegate.currentLoc.error.connectionError);
@@ -153,8 +150,8 @@ void main() {
       stubRegisterErr(Exception(LocDelegate.currentLoc.error.exceptionError));
       stubDoc(MockDocumentSnapshotNULL());
 
-      bloc.registerUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(response.message,

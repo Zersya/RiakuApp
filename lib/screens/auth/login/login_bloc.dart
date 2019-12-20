@@ -24,7 +24,7 @@ class LoginBloc extends BaseReponseBloc<FormState> {
     _isVisible.sink.add(data);
   }
 
-  void loginUser(User user) async {
+  Future loginUser(User user) async {
     this.subjectState.sink.add(FormState.LOADING);
 
     MyResponse response = await _authService.loginUser(user);

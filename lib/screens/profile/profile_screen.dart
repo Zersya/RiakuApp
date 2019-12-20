@@ -4,7 +4,6 @@ import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/profile/profile_bloc.dart';
 import 'package:riaku_app/utils/funcCommon.dart';
 import 'package:riaku_app/utils/router.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -35,35 +34,33 @@ class _ProfileScreenState extends State<ProfileScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasData)
             return Center(child: CircularProgressIndicator());
-            return Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                CircleAvatar(
-                  radius: 32,
-                  backgroundImage:
-                      CachedNetworkImageProvider(generateAvatar(snapshot.data.id)),
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              CircleAvatar(
+                radius: 32,
+                backgroundImage: CachedNetworkImageProvider(
+                    generateAvatar(snapshot.data.id)),
+              ),
+              SizedBox(
+                height: 16.0,
+              ),
+              Text(
+                snapshot.data.username,
+                style: Theme.of(context).textTheme.subhead,
+              ),
+              Container(
+                child: RaisedButton(
+                  child: Text('Logout'),
+                  onPressed: () {
+                    _profileBloc.logout();
+                    Navigator.of(context)
+                        .pushReplacementNamed(Router.kRouteAuth);
+                  },
                 ),
-                SizedBox(
-                  height: 16.0,
-                ),
-                Text(
-                  snapshot.data.username,
-                  style: Theme.of(context).textTheme.subhead,
-                ),
-                Container(
-                  child: RaisedButton(
-                    child: Text('Logout'),
-                    onPressed: () {
-                      SharedPreferences.getInstance().then((val) {
-                        val.clear();
-                        Navigator.of(context)
-                            .pushReplacementNamed(Router.kRouteAuth);
-                      });
-                    },
-                  ),
-                ),
-              ],
-            );
+              ),
+            ],
+          );
         });
   }
 }

@@ -12,7 +12,7 @@ class ProfileBloc {
 
   BehaviorSubject<User> get userStream => _streamUser.stream;
 
-  void fetchUser() async {
+  Future fetchUser() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String email = pref.getString(kEmailKey);
     String id = pref.getString(kIdKey);
@@ -23,7 +23,14 @@ class ProfileBloc {
     _streamUser.sink.add(user);
   }
 
-  void dispose(){
+  Future logout() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.clear();
+
+    _streamUser.sink.add(null);
+  }
+
+  void dispose() {
     _streamUser.close();
   }
 }

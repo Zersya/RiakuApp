@@ -56,11 +56,11 @@ void main() {
       LoginBloc bloc = LoginBloc();
 
       bloc.setVisibility(false);
-      bool isVisible = await bloc.isVisibleStream.first;
+      bool isVisible = bloc.isVisibleStream.value;
       expect(isVisible, false);
 
       bloc.setVisibility(true);
-      isVisible = await bloc.isVisibleStream.first;
+      isVisible = bloc.isVisibleStream.value;
       expect(isVisible, true);
 
       bloc.dispose();
@@ -97,8 +97,8 @@ void main() {
       stubSignIn(null);
       stubDoc();
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.SUCCESS);
       expect(bloc.stateStream, emits(FormState.IDLE));
@@ -113,8 +113,8 @@ void main() {
           code: 'WRONG_EMAIL_PASS', message: 'Wrong password or email'));
       stubDoc();
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(bloc.stateStream, emits(FormState.IDLE));
@@ -129,8 +129,8 @@ void main() {
           SocketException(LocDelegate.currentLoc.error.connectionError));
       stubDoc();
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(response.message, LocDelegate.currentLoc.error.connectionError);
@@ -145,8 +145,8 @@ void main() {
       stubSignInErr(Exception(LocDelegate.currentLoc.error.exceptionError));
       stubDoc();
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
-      MyResponse response = await bloc.subjectResponse.stream.first;
+      await bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
       expect(response.message,
