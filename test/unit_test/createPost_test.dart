@@ -177,6 +177,8 @@ void main() {
 
     test('failed create exception', () async {
       CreatePostBloc bloc = CreatePostBloc();
+      bloc.user =
+          User('mail@mail.com', id: 'mail@mail.com', username: 'mail-mail');
 
       stubGeoService();
       await bloc.fetchLocation();
@@ -198,6 +200,8 @@ void main() {
 
     test('failed create socketexception', () async {
       CreatePostBloc bloc = CreatePostBloc();
+      bloc.user =
+          User('mail@mail.com', id: 'mail@mail.com', username: 'mail-mail');
 
       stubGeoService();
       await bloc.fetchLocation();
