@@ -47,7 +47,7 @@ void main() {
     firestore = MockFirestore();
     auth = MockFirebaseAuth();
 
-    locator(firestore, auth, true);
+    locator(firestore, true, auth: auth);
 
     locDelegate = LocDelegate();
     locDelegate.load(Locale('en'));

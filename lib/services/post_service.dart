@@ -8,12 +8,14 @@ import 'package:riaku_app/utils/loc_delegate.dart';
 import 'package:riaku_app/utils/my_response.dart';
 
 class PostService {
-  Firestore _firestore = Firestore.instance;
+  final Firestore firestore;
+
+  PostService(this.firestore);
 
   Future<MyResponse> likePost(Post post) async {
     try {
       
-      await _firestore
+      await firestore
           .collection('posts')
           .document(post.id)
           .setData(post.toMap());
@@ -31,9 +33,9 @@ class PostService {
 
   Future<MyResponse> createPost(Post post) async {
     try {
-      post.id = _firestore.collection('posts').document().documentID;
+      post.id = firestore.collection('posts').document().documentID;
 
-      await _firestore
+      await firestore
           .collection('posts')
           .document(post.id)
           .setData(post.toMap());
@@ -52,7 +54,7 @@ class PostService {
   Future<MyResponse> fetchPost() async {
     try {
       Stream<QuerySnapshot> snapshot =
-          _firestore.collection('posts').orderBy('createdAt').snapshots();
+          firestore.collection('posts').orderBy('createdAt').snapshots();
 
       return MyResponse<Stream<QuerySnapshot>>(ResponseState.SUCCESS, snapshot,
           message: LocDelegate.currentLoc.success.successCreate);

@@ -2,6 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:geocoder/services/local.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riaku_app/utils/loc_delegate.dart';
 import 'package:riaku_app/utils/locator.dart';
@@ -14,7 +16,8 @@ void main() async {
 
   runApp(MyApp());
 
-  locator(Firestore.instance, FirebaseAuth.instance, false);
+  locator(Firestore.instance, false,
+      auth: FirebaseAuth.instance, geocod: LocalGeocoding(), geoloc: Geolocator());
 }
 
 class MyApp extends StatelessWidget {

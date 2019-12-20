@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/post_service.dart';
@@ -20,7 +21,7 @@ class DashboardBloc extends BaseReponseBloc {
   User _user;
 
   DashboardBloc() {
-    _servicePost = PostService();
+    _servicePost = GetIt.I<PostService>();
 
     _subjectPosts = BehaviorSubject<List<Post>>();
     _subjectOnUploadIdx = BehaviorSubject<int>();
@@ -77,7 +78,6 @@ class DashboardBloc extends BaseReponseBloc {
   }
 
   void fetchData() async {
-
     MyResponse<Stream<QuerySnapshot>> response = await _servicePost.fetchPost();
     response.result.listen((val) {
       _currentList = val.documents.map((v) => Post.formMap(v.data)).toList();
@@ -101,7 +101,6 @@ class DashboardBloc extends BaseReponseBloc {
     return _user;
   }
 
-  
   @override
   void dispose() {
     super.dispose();

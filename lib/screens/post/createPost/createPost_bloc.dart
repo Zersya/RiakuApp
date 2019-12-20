@@ -1,17 +1,18 @@
 import 'package:connectivity/connectivity.dart';
 import 'package:geocoder/geocoder.dart';
+import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
+import 'package:riaku_app/services/geo_service.dart';
 import 'package:riaku_app/services/post_service.dart';
 import 'package:riaku_app/utils/my_response.dart';
-import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:geolocator/geolocator.dart';
 
 class CreatePostBloc extends BaseReponseBloc {
   PostService _servicePost;
+  GeoService _geoService;
+
   BehaviorSubject<bool> _subjectIsConnect;
   BehaviorSubject<bool> _subjectIsNotEmpty;
 
@@ -20,7 +21,9 @@ class CreatePostBloc extends BaseReponseBloc {
   User user;
 
   CreatePostBloc() {
-    _servicePost = PostService();
+    _servicePost = GetIt.I<PostService>();
+    _geoService = GetIt.I<GeoService>();
+
     _subjectIsConnect = BehaviorSubject<bool>();
     _subjectIsNotEmpty = BehaviorSubject<bool>();
   }
@@ -51,24 +54,13 @@ class CreatePostBloc extends BaseReponseBloc {
     }
   }
 
-  void fetchLocation() async {
-    Position location = await Geolocator()
-        .getLastKnownPosition(desiredAccuracy: LocationAccuracy.medium);
-    print(location);
-    final coordinates = new Coordinates(location.latitude, location.longitude);
-    final addresses =
-        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+  Future fetchLocation() async {
+   List<Address> addresses = await _geoService.fetchLocation();
     _currentLocation = addresses.first;
-    print(_currentLocation.locality);
   }
 
   Future<Post> submitPost(String desc, String imgUrl, String timeEpoch) async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String email = pref.getString(kEmailKey);
-    String id = pref.getString(kIdKey);
-    String username = pref.getString(kUsernameKey);
-
-    User user = User(email, id: id, username: username);
+    // User user = User(email, id: id, username: username);
     Post post = Post(_currentLocation.locality, user, desc, imgUrl, timeEpoch);
 
     MyResponse response = await _servicePost.createPost(post);
