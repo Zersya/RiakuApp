@@ -1,4 +1,5 @@
 import 'package:faker/faker.dart';
+import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/auth_service.dart';
 import 'package:riaku_app/utils/enum.dart';
@@ -11,7 +12,7 @@ class RegisterBloc extends BaseReponseBloc<FormState> {
   BehaviorSubject<User> _subjectUser;
 
   RegisterBloc() {
-    _authService = AuthService();
+    _authService = GetIt.I<AuthService>();
     _subjectUser = BehaviorSubject<User>();
   }
 

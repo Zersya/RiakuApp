@@ -43,6 +43,8 @@ dependencies:
   geolocator: ^5.1.5
   geocoder: ^0.2.1
   cached_network_image: ^2.0.0-rc
+  get_it: ^3.0.3
+  mockito: ^4.1.1
 
   
 

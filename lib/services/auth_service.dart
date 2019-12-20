@@ -11,8 +11,13 @@ import 'dart:io';
 import 'package:riaku_app/utils/strCode.dart';
 
 class AuthService {
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  Firestore _firestore = Firestore.instance;
+  FirebaseAuth _auth;
+  Firestore _firestore;
+
+  AuthService(Firestore firestore, FirebaseAuth auth){
+    _auth = auth;
+    _firestore = firestore;
+  }
 
   Future<MyResponse> loginUser(User user) async {
     try {

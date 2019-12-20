@@ -1,3 +1,4 @@
+import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/auth_service.dart';
 import 'package:riaku_app/utils/enum.dart';
@@ -11,7 +12,7 @@ class LoginBloc extends BaseReponseBloc<FormState> {
   BehaviorSubject<bool> _isVisible;
 
   LoginBloc() {
-    _authService = AuthService();
+    _authService = GetIt.I<AuthService>();
     _isVisible = BehaviorSubject<bool>();
   }
 
@@ -30,7 +31,6 @@ class LoginBloc extends BaseReponseBloc<FormState> {
     if (response.responseState == ResponseState.SUCCESS) {
       SharedPreferences pref = await SharedPreferences.getInstance();
 
-      print(response.result.id);
       pref.setString(kEmailKey, response.result.email);
       pref.setString(kIdKey, response.result.id);
       pref.setString(kUsernameKey, response.result.username);
