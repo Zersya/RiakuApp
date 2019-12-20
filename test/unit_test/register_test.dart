@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:io';
 import 'dart:ui';
 
@@ -8,12 +7,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/screens/auth/login/login_bloc.dart';
+import 'package:riaku_app/screens/auth/register/register_bloc.dart';
 import 'package:riaku_app/utils/enum.dart';
 import 'package:riaku_app/utils/loc_delegate.dart';
 import 'package:riaku_app/utils/locator.dart';
 import 'package:riaku_app/utils/my_response.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:riaku_app/utils/strCode.dart';
+
+import 'login_test.dart';
 
 class MockFirestore extends Mock implements Firestore {}
 
@@ -32,6 +33,13 @@ class MockDocumentSnapshot extends Mock implements DocumentSnapshot {
   };
 }
 
+class MockDocumentSnapshotNULL extends Mock implements DocumentSnapshot {
+  String documentID = '123';
+  Map<String, dynamic> data;
+}
+
+
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -40,8 +48,7 @@ void main() {
   LocDelegate locDelegate;
 
   setUpAll(() {
-    SharedPreferences.setMockInitialValues({});
-
+    
     firestore = MockFirestore();
     auth = MockFirebaseAuth();
 
@@ -51,36 +58,20 @@ void main() {
     locDelegate.load(Locale('en'));
   });
 
-  group('Login UI', () {
-    test('check visible pass', () async {
-      LoginBloc bloc = LoginBloc();
-
-      bloc.setVisibility(false);
-      bool isVisible = await bloc.isVisibleStream.first;
-      expect(isVisible, false);
-
-      bloc.setVisibility(true);
-      isVisible = await bloc.isVisibleStream.first;
-      expect(isVisible, true);
-
-      bloc.dispose();
-    });
-  });
-
-  group('Login Auth', () {
-    stubSignIn(response) {
-      when(auth.signInWithEmailAndPassword(
+  group('Register Auth', () {
+    stubRegister(response) {
+      when(auth.createUserWithEmailAndPassword(
               email: 'mail@mail.com', password: '1234567'))
           .thenAnswer((_) => response);
     }
 
-    stubSignInErr(response) {
-      when(auth.signInWithEmailAndPassword(
+    stubRegisterErr(response) {
+      when(auth.createUserWithEmailAndPassword(
               email: 'mail@mail.com', password: '1234567'))
           .thenThrow(response);
     }
 
-    stubDoc() {
+    stubDoc(DocumentSnapshot response) {
       MockCollectionReference colRef = MockCollectionReference();
       when(firestore.collection('users')).thenAnswer((_) => colRef);
 
@@ -88,32 +79,49 @@ void main() {
       when(colRef.document('mail@mail.com')).thenAnswer((_) => docRef);
 
       when(docRef.snapshots())
-          .thenAnswer((_) => Future.value(MockDocumentSnapshot()).asStream());
+          .thenAnswer((_) => Future.value(response).asStream());
     }
 
-    test('success', () async {
-      LoginBloc bloc = LoginBloc();
+    test('success registered ', () async {
+      RegisterBloc bloc = RegisterBloc();
 
-      stubSignIn(null);
-      stubDoc();
+      stubDoc(MockDocumentSnapshotNULL());
+      stubRegister(null);
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      bloc.registerUser(User('mail@mail.com', password: '1234567'));
       MyResponse response = await bloc.subjectResponse.stream.first;
 
       expect(response.responseState, ResponseState.SUCCESS);
+      expect(response.message, LocDelegate.currentLoc.success.successCreate);
+      expect(bloc.stateStream, emits(FormState.IDLE));
+
+      bloc.dispose();
+    });
+
+    test('failed already registered ', () async {
+      RegisterBloc bloc = RegisterBloc();
+
+      stubDoc(MockDocumentSnapshot());
+      stubRegister(null);
+
+      bloc.registerUser(User('mail@mail.com', password: '1234567'));
+      MyResponse response = await bloc.subjectResponse.stream.first;
+
+      expect(response.responseState, ResponseState.ERROR);
+      expect(response.message, LocDelegate.currentLoc.error.emailRegisteredError);
       expect(bloc.stateStream, emits(FormState.IDLE));
 
       bloc.dispose();
     });
 
     test('failed platform exception', () async {
-      LoginBloc bloc = LoginBloc();
+      RegisterBloc bloc = RegisterBloc();
 
-      stubSignInErr(PlatformException(
-          code: 'WRONG_EMAIL_PASS', message: 'Wrong password or email'));
-      stubDoc();
+      stubRegisterErr(PlatformException(
+          code: kEmailRegisteredCode, message: LocDelegate.currentLoc.error.emailRegisteredError));
+      stubDoc(MockDocumentSnapshot());
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      bloc.registerUser(User('mail@mail.com', password: '1234567'));
       MyResponse response = await bloc.subjectResponse.stream.first;
 
       expect(response.responseState, ResponseState.ERROR);
@@ -123,13 +131,13 @@ void main() {
     });
 
     test('failed socket exception', () async {
-      LoginBloc bloc = LoginBloc();
+      RegisterBloc bloc = RegisterBloc();
 
-      stubSignInErr(
+      stubRegisterErr(
           SocketException(LocDelegate.currentLoc.error.connectionError));
-      stubDoc();
+      stubDoc(MockDocumentSnapshotNULL());
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      bloc.registerUser(User('mail@mail.com', password: '1234567'));
       MyResponse response = await bloc.subjectResponse.stream.first;
 
       expect(response.responseState, ResponseState.ERROR);
@@ -140,12 +148,12 @@ void main() {
     });
 
     test('failed exception', () async {
-      LoginBloc bloc = LoginBloc();
+      RegisterBloc bloc = RegisterBloc();
 
-      stubSignInErr(Exception(LocDelegate.currentLoc.error.exceptionError));
-      stubDoc();
+      stubRegisterErr(Exception(LocDelegate.currentLoc.error.exceptionError));
+      stubDoc(MockDocumentSnapshotNULL());
 
-      bloc.loginUser(User('mail@mail.com', password: '1234567'));
+      bloc.registerUser(User('mail@mail.com', password: '1234567'));
       MyResponse response = await bloc.subjectResponse.stream.first;
 
       expect(response.responseState, ResponseState.ERROR);
