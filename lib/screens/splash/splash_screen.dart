@@ -28,15 +28,18 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       body: Container(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Stack(
+            alignment: Alignment.center,
             children: <Widget>[
-              Text(
-                'RIAKU',
-                style: Theme.of(context).textTheme.title,
-              ),
-              SizedBox(height: 16.0),
-              CircularProgressIndicator()
+              ClipRRect(
+                    borderRadius: BorderRadius.circular(30.0),
+                    child: Image.asset(
+                      'assets/logos/logo.png',
+                      width: MediaQuery.of(context).size.width / 1.5,
+                    )),
+              Positioned(
+                bottom: 16,
+                child: Center(child: CircularProgressIndicator(strokeWidth: 1,)))
             ],
           ),
         ),
