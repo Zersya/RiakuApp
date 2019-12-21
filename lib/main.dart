@@ -5,14 +5,15 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:geocoder/services/local.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:riaku_app/screens/splash/splash_screen.dart';
 import 'package:riaku_app/utils/loc_delegate.dart';
 import 'package:riaku_app/utils/locator.dart';
 import 'package:riaku_app/utils/router.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {
-  timeago.setLocaleMessages('id', timeago.IdMessages());
   timeago.setLocaleMessages('en', timeago.EnMessages());
+  timeago.setLocaleMessages('id', timeago.IdMessages());
 
   runApp(MyApp());
 
@@ -90,8 +91,8 @@ class MyApp extends StatelessWidget {
       supportedLocales: [const Locale('en'), const Locale('id')],
       theme: _themeData,
       onGenerateRoute: Router.generateRoute,
-      initialRoute: Router.kRouteSplash,
-      // home: SplashScreen(),
+      // initialRoute: Router.kRouteSplash,
+      home: SplashScreen(),
     );
   }
 }

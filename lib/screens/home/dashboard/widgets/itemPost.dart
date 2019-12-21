@@ -63,7 +63,8 @@ class ItemPost extends StatelessWidget {
             child: Row(
               children: <Widget>[
                 CircleAvatar(
-                  backgroundImage: CachedNetworkImageProvider(generateAvatar(user.id)),
+                  backgroundImage:
+                      CachedNetworkImageProvider(generateAvatar(user.id)),
                 ),
                 Expanded(
                   child: ListTile(
@@ -76,7 +77,9 @@ class ItemPost extends StatelessWidget {
                       alignment: WrapAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          timeago.format(timePost) ?? '-',
+                          timeago.format(timePost,
+                                  locale: Locale.cachedLocaleString) ??
+                              '-',
                           style: Theme.of(context).textTheme.subtitle,
                         ),
                         Text(
@@ -142,7 +145,6 @@ class ItemPost extends StatelessWidget {
                 Expanded(
                     flex: 1,
                     child: InkWell(
-                      
                       onTap: () {
                         _dashboardBloc.likePost(post);
                       },
