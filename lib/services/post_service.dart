@@ -59,10 +59,10 @@ class PostService {
       return MyResponse<Stream<QuerySnapshot>>(ResponseState.SUCCESS, snapshot,
           message: LocDelegate.currentLoc.success.successCreate);
     } on SocketException {
-      return MyResponse(ResponseState.ERROR, null,
+      return MyResponse<Stream<QuerySnapshot>>(ResponseState.ERROR, null,
           message: LocDelegate.currentLoc.error.connectionError);
     } on Exception {
-      return MyResponse(ResponseState.ERROR, null,
+      return MyResponse<Stream<QuerySnapshot>>(ResponseState.ERROR, null,
           message: LocDelegate.currentLoc.error.exceptionError);
     }
   }

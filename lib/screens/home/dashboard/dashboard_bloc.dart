@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/post_service.dart';
+import 'package:riaku_app/utils/enum.dart';
 import 'package:riaku_app/utils/my_response.dart';
 import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
@@ -58,7 +59,7 @@ class DashboardBloc extends BaseReponseBloc {
     _subjectOnUploadIdx.sink.add(_index);
   }
 
-  void likePost(Post post) async {
+  Future likePost(Post post) async {
     post.likes = List.from(post.likes);
     post.likes.add(_user.id);
     _currentList.firstWhere((val) {
@@ -66,7 +67,9 @@ class DashboardBloc extends BaseReponseBloc {
       return val.id == post.id;
     });
     _subjectPosts.sink.add(_currentList);
-    _servicePost.likePost(post);
+    
+    MyResponse response = await _servicePost.likePost(post);
+    this.subjectResponse.sink.add(response);
   }
 
   int yourLike(Post post) {
@@ -77,16 +80,19 @@ class DashboardBloc extends BaseReponseBloc {
     return counter;
   }
 
-  void fetchData() async {
+  Future fetchData() async {
     MyResponse<Stream<QuerySnapshot>> response = await _servicePost.fetchPost();
-    response.result.listen((val) {
-      _currentList = val.documents.map((v) => Post.formMap(v.data)).toList();
-      _currentList = _currentList.reversed.toList();
+    this.subjectResponse.sink.add(response);
 
-      _subjectOnUploadIdx.sink.add(_index);
-      _subjectPosts.sink.add(_currentList);
-      this.subjectResponse.sink.add(response);
-    });
+    if (response.responseState == ResponseState.SUCCESS) {
+      response.result.listen((val) {
+        _currentList = val.documents.map((v) => Post.formMap(v.data)).toList();
+        _currentList = _currentList.reversed.toList();
+
+        _subjectOnUploadIdx.sink.add(_index);
+        _subjectPosts.sink.add(_currentList);
+      });
+    }
   }
 
   Future<User> fetchUser() async {
