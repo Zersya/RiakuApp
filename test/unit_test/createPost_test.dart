@@ -47,6 +47,7 @@ void main() {
 
   group('UI visible btn', () {
     setUpAll(() {
+      SharedPreferences.setMockInitialValues({});
       locator(firestore, true);
     });
 

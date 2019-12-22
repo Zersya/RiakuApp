@@ -69,5 +69,6 @@ class DetailPostBloc extends PostHelper {
     _subjectPost.close();
     _subjectComments.close();
     subjectFocusComment.close();
+    subjectCountComment.close();
   }
 }

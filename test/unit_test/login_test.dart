@@ -63,7 +63,7 @@ void main() {
       isVisible = bloc.isVisibleStream.value;
       expect(isVisible, true);
 
-      bloc.dispose();
+      // bloc.dispose();
     });
   });
 

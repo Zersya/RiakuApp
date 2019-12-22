@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'post.dart';
 import 'user.dart';
 
 class Comment {

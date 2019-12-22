@@ -74,7 +74,7 @@ class PostService {
 
   Future<MyResponse> deletePost(Post post) async {
     try {
-      final docRef = await firestore.collection('posts').document(post.id);
+      final docRef = firestore.collection('posts').document(post.id);
       docRef.delete();
 
       return MyResponse(ResponseState.SUCCESS, post,

@@ -81,7 +81,7 @@ void main() {
       data = bloc.isAble2Delete(Post.fromMap(_post));
 
       expect(data, false);
-      bloc.dispose();
+      // bloc.dispose();
     });
     test('your post likes', () async {
       DashboardBloc bloc = DashboardBloc();
@@ -91,10 +91,10 @@ void main() {
 
       expect(counter, 2);
 
-      bloc.dispose();
+      // bloc.dispose();
     });
 
-    test('add post progress', () async {
+    test('add post progress', () {
       DashboardBloc bloc = DashboardBloc();
 
       bloc.setListData(post);
@@ -106,7 +106,7 @@ void main() {
       int counter = bloc.onUploadIdxStream.value;
       expect(counter, 0);
 
-      bloc.dispose();
+      // bloc.dispose();
     });
   });
 

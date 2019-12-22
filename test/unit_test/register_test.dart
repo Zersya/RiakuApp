@@ -13,6 +13,7 @@ import 'package:riaku_app/helper/loc_delegate.dart';
 import 'package:riaku_app/helper/locator.dart';
 import 'package:riaku_app/helper/my_response.dart';
 import 'package:riaku_app/utils/strCode.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MockFirestore extends Mock implements Firestore {}
 
@@ -44,6 +45,8 @@ void main() {
   LocDelegate locDelegate;
 
   setUpAll(() {
+    SharedPreferences.setMockInitialValues({});
+    
     firestore = MockFirestore();
     auth = MockFirebaseAuth();
 
