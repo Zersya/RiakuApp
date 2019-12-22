@@ -30,7 +30,7 @@ class DetailPostBloc extends PostHelper {
   ValueStream<bool> get focusCommentStream => subjectFocusComment.stream;
   ValueStream<int> get countCommentStrea => subjectCountComment.stream;
 
-  Future commentPost(Comment comment, Post post) async {
+  Future submitComment(Comment comment, Post post) async {
     _currentList.add(comment);
     _subjectComments.sink.add(_currentList);
     post.countComment = _currentList.length;

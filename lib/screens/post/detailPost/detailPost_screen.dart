@@ -176,6 +176,6 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
         DateTime.now().millisecondsSinceEpoch.toString(), _controller.text);
     _controller.text = '';
 
-    _detailPostBloc.commentPost(comment, widget.post);
+    _detailPostBloc.submitComment(comment, widget.post);
   }
 }
