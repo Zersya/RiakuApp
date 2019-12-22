@@ -6,7 +6,7 @@ import 'package:riaku_app/services/post_service.dart';
 class PostHelper extends BaseReponseBloc {
   PostService _servicePost;
 
-  PostHelper(){
+  PostHelper() {
     _servicePost = GetIt.I<PostService>();
   }
 
@@ -48,6 +48,7 @@ class PostHelper extends BaseReponseBloc {
 
     bool data =
         (dateTime.difference(DateTime.now()).inMinutes.abs() < delayTimeMinute);
+    data = data && post.user.id == this.user.id;
     return data;
   }
 }

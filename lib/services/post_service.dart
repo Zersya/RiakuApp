@@ -12,7 +12,7 @@ class PostService {
   final Firestore firestore;
 
   PostService(this.firestore);
-  
+
   Future<MyResponse> fetchComment(Post post) async {
     try {
       final docRef = firestore.collection('posts').document(post.id);
@@ -20,7 +20,9 @@ class PostService {
 
       Stream<QuerySnapshot> snapshot = firestore
           .collection('comments')
-          .where('docRef', isEqualTo: docRef).orderBy('createdAt').snapshots();
+          .where('docRef', isEqualTo: docRef)
+          .orderBy('createdAt', descending: true)
+          .snapshots();
 
       return MyResponse<Stream<QuerySnapshot>>(ResponseState.SUCCESS, snapshot,
           message: LocDelegate.currentLoc.success.successCreate);
@@ -42,6 +44,11 @@ class PostService {
           .collection('comments')
           .document(commentId)
           .setData(comment.toMap());
+
+      await firestore
+          .collection('posts')
+          .document(post.id)
+          .setData(post.toMap());
 
       return MyResponse(ResponseState.SUCCESS, comment,
           message: LocDelegate.currentLoc.success.successCreate);
