@@ -63,7 +63,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   value: _dashboardBloc,
                 ),
               ],
-              child: FormStatus(),
+              child: Padding(
+                padding: const EdgeInsets.only(top:16.0),
+                child: FormStatus(),
+              ),
             ),
             StreamBuilder<List<Post>>(
                 stream: _dashboardBloc.postsStream,

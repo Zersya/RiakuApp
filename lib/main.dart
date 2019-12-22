@@ -23,8 +23,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   static final ColorScheme _colorSchemeLight = ColorScheme.light(
-    primary: const Color(0xffd32f2f),
-    primaryVariant: const Color(0xffff6659),
+    primary: const Color(0xffef3860),
+    primaryVariant: const Color(0xfff30e40),
     secondary: const Color(0xffff8f00),
     secondaryVariant: const Color(0xffffc046),
     surface: Colors.black45,

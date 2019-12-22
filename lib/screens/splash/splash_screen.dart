@@ -34,12 +34,12 @@ class _SplashScreenState extends State<SplashScreen> {
               ClipRRect(
                     borderRadius: BorderRadius.circular(30.0),
                     child: Image.asset(
-                      'assets/logos/logo.png',
+                      'assets/logos/logo_transparent.png',
                       width: MediaQuery.of(context).size.width / 1.5,
                     )),
               Positioned(
                 bottom: 16,
-                child: Center(child: CircularProgressIndicator(strokeWidth: 1,)))
+                child: Center(child: CircularProgressIndicator(strokeWidth: 2,)))
             ],
           ),
         ),

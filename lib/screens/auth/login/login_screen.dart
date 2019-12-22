@@ -96,56 +96,59 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         SizedBox(
                           height: 48.0,
-                                                  child: GestureDetector(
-                            onTap: (){},
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 8.0),
-                              child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Text(loc.auth.forgotPassword),
-                              ),
-                            ),
-                          ),
+                          // child: GestureDetector(
+                          //   onTap: () {},
+                          //   child: Padding(
+                          //     padding: EdgeInsets.symmetric(vertical: 8.0),
+                          //     child: Align(
+                          //       alignment: Alignment.centerRight,
+                          //       child: Text(loc.auth.forgotPassword),
+                          //     ),
+                          //   ),
+                          // ),
                         ),
                         StreamBuilder<bool>(
-                          stream: _loginBloc.isVisibleStream,
-                          initialData: true,
-                          builder: (context, snapshot) {
-                            bool isVisible = snapshot.data;
-                            return Material(
-                              elevation: 2,
-                              borderRadius: BorderRadius.circular(radiusInputField),
-                              shadowColor:
-                                  Theme.of(context).colorScheme.primaryVariant,
-                              child: TextFormField(
-                                controller: _passwordController,
-                                focusNode: _passwordFN,
-                                obscureText: isVisible,
-                                textInputAction: TextInputAction.done,
-                                decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  suffixIcon: GestureDetector(
-                                    onTap: (){
-                                      _loginBloc.setVisibility(!isVisible);
-                                    },
-                                    child: Icon(isVisible ? Icons.visibility_off:Icons.visibility)),
-                                  prefixIcon: Icon(Icons.lock),
+                            stream: _loginBloc.isVisibleStream,
+                            initialData: true,
+                            builder: (context, snapshot) {
+                              bool isVisible = snapshot.data;
+                              return Material(
+                                elevation: 2,
+                                borderRadius:
+                                    BorderRadius.circular(radiusInputField),
+                                shadowColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryVariant,
+                                child: TextFormField(
+                                  controller: _passwordController,
+                                  focusNode: _passwordFN,
+                                  obscureText: isVisible,
+                                  textInputAction: TextInputAction.done,
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    suffixIcon: GestureDetector(
+                                        onTap: () {
+                                          _loginBloc.setVisibility(!isVisible);
+                                        },
+                                        child: Icon(isVisible
+                                            ? Icons.visibility_off
+                                            : Icons.visibility)),
+                                    prefixIcon: Icon(Icons.lock),
+                                  ),
+                                  onFieldSubmitted: (val) {
+                                    _submitLogin();
+                                  },
+                                  validator: (val) {
+                                    if (val.isEmpty) {
+                                      return loc.error.passwordEmpty;
+                                    } else if (val.length < 6) {
+                                      return loc.error.passwordMin;
+                                    }
+                                    return null;
+                                  },
                                 ),
-                                onFieldSubmitted: (val) {
-                                  _submitLogin();
-                                },
-                                validator: (val) {
-                                  if (val.isEmpty) {
-                                    return loc.error.passwordEmpty;
-                                  } else if (val.length < 6) {
-                                    return loc.error.passwordMin;
-                                  }
-                                  return null;
-                                },
-                              ),
-                            );
-                          }
-                        ),
+                              );
+                            }),
                         SizedBox(
                           height: 32,
                         ),
