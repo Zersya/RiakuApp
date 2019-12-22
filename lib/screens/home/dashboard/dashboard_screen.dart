@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
@@ -19,6 +20,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   CreatePostBloc _createPostBloc = CreatePostBloc();
   DashboardBloc _dashboardBloc = DashboardBloc();
+
+  RefreshController _refreshController =
+      RefreshController(initialRefresh: false);
 
   @override
   void initState() {
@@ -49,59 +53,67 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      body: SingleChildScrollView(
-        physics: ScrollPhysics(),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            MultiProvider(
-              providers: [
-                Provider.value(
-                  value: _createPostBloc,
+      body: SmartRefresher(
+        header: ClassicHeader(),
+        controller: _refreshController,
+        onRefresh: () async {
+          await _dashboardBloc.fetchData();
+          _refreshController.refreshCompleted();
+        },
+        child: SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              MultiProvider(
+                providers: [
+                  Provider.value(
+                    value: _createPostBloc,
+                  ),
+                  Provider.value(
+                    value: _dashboardBloc,
+                  ),
+                ],
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 16.0),
+                  child: FormStatus(),
                 ),
-                Provider.value(
-                  value: _dashboardBloc,
-                ),
-              ],
-              child: Padding(
-                padding: const EdgeInsets.only(top:16.0),
-                child: FormStatus(),
               ),
-            ),
-            StreamBuilder<List<Post>>(
-                stream: _dashboardBloc.postsStream,
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) return ShimmerLoading();
-                  List<Post> currentList = snapshot.data;
-                  return ListView.separated(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: currentList.length,
-                    separatorBuilder: (context, index) {
-                      return Container(
-                        height: 5,
-                        color: Theme.of(context).colorScheme.surface,
-                      );
-                    },
-                    itemBuilder: (context, index) {
-                      return StreamBuilder<int>(
-                          stream: _dashboardBloc.onUploadIdxStream,
-                          initialData: 0,
-                          builder: (context, snapshot) {
-                            if (!snapshot.hasData) return ShimmerLoading();
-                            return Provider.value(
-                              value: _dashboardBloc,
-                              child: ItemPost(
-                                index: index,
-                                  isUpload: index < snapshot.data,
-                                  user: currentList[index].user,
-                                  post: currentList[index]),
-                            );
-                          });
-                    },
-                  );
-                }),
-          ],
+              StreamBuilder<List<Post>>(
+                  stream: _dashboardBloc.postsStream,
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) return ShimmerLoading();
+                    List<Post> currentList = snapshot.data;
+                    return ListView.separated(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: currentList.length,
+                      separatorBuilder: (context, index) {
+                        return Container(
+                          height: 5,
+                          color: Theme.of(context).colorScheme.surface,
+                        );
+                      },
+                      itemBuilder: (context, index) {
+                        return StreamBuilder<int>(
+                            stream: _dashboardBloc.onUploadIdxStream,
+                            initialData: 0,
+                            builder: (context, snapshot) {
+                              if (!snapshot.hasData) return ShimmerLoading();
+                              return Provider.value(
+                                value: _dashboardBloc,
+                                child: ItemPost(
+                                    index: index,
+                                    isUpload: index < snapshot.data,
+                                    user: currentList[index].user,
+                                    post: currentList[index]),
+                              );
+                            });
+                      },
+                    );
+                  }),
+            ],
+          ),
         ),
       ),
     );

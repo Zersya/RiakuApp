@@ -18,7 +18,9 @@ void main() async {
   runApp(MyApp());
 
   locator(Firestore.instance, false,
-      auth: FirebaseAuth.instance, geocod: LocalGeocoding(), geoloc: Geolocator());
+      auth: FirebaseAuth.instance,
+      geocod: LocalGeocoding(),
+      geoloc: Geolocator());
 }
 
 class MyApp extends StatelessWidget {
@@ -89,6 +91,10 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate,
       ],
       supportedLocales: [const Locale('en'), const Locale('id')],
+      localeResolutionCallback:
+          (Locale locale, Iterable<Locale> supportedLocales) {
+        return locale;
+      },
       theme: _themeData,
       onGenerateRoute: Router.generateRoute,
       // initialRoute: Router.kRouteSplash,

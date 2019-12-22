@@ -45,6 +45,7 @@ dependencies:
   cached_network_image: ^2.0.0-rc
   get_it: ^3.0.3
   mockito: ^4.1.1
+  pull_to_refresh: ^1.5.7
 
   
 
