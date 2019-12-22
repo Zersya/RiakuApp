@@ -160,33 +160,38 @@ class ItemPost extends StatelessWidget {
                         ),
                     ],
                   ),
-                  Text('100 ${loc.dashboard.commentsLabel}',
+                  Text('${post.countComment} ${loc.dashboard.commentsLabel}',
                       style: Theme.of(context).textTheme.overline)
                 ],
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
+            Material(
+              child: Container(
+                decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
                   border: Border(
-                      top: BorderSide(
-                          color: Theme.of(context).colorScheme.onSurface))),
-              child: Row(
-                children: <Widget>[
-                  Expanded(
+                    top: BorderSide(
+                        color: Theme.of(context).colorScheme.onSurface),
+                  ),
+                ),
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
                       flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border(right: BorderSide(color: Colors.grey))),
-                        child: InkWell(
-                          onTap: () {
-                            postHelper.likePost(post, index, true);
-                          },
-                          onLongPress: () {
-                            postHelper.likePost(post, index, false);
-                          },
+                      child: InkWell(
+                        onTap: () {
+                          postHelper.likePost(post, index, true);
+                        },
+                        onLongPress: () {
+                          postHelper.likePost(post, index, false);
+                        },
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            border: Border(
+                              right: BorderSide.none,
+                            ),
+                          ),
                           child: Icon(
                             FontAwesomeIcons.signLanguage,
                             color: myLike > 0
@@ -194,27 +199,25 @@ class ItemPost extends StatelessWidget {
                                 : Colors.grey,
                           ),
                         ),
-                      )),
-                  Expanded(
-                      flex: 1,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            border:
-                                Border(left: BorderSide(color: Colors.grey))),
-                        child: InkWell(
-                          onTap: () {
-                            postHelper.likePost(post, index, true);
-                          },
-                          onLongPress: () {
-                            postHelper.likePost(post, index, false);
-                          },
-                          child: Icon(
-                            FontAwesomeIcons.solidComment,
-                            color: Colors.grey,
-                          ),
-                        ),
-                      )),
-                ],
+                      ),
+                    ),
+                    // Expanded(
+                    //   flex: 1,
+                    //   child: InkWell(
+                    //     child: Container(
+                    //       padding: EdgeInsets.all(8),
+                    //       decoration: BoxDecoration(
+                    //           border:
+                    //               Border(left: BorderSide(color: Colors.grey))),
+                    //       child: Icon(
+                    //         FontAwesomeIcons.solidComment,
+                    //         color: Colors.grey,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
+                  ],
+                ),
               ),
             )
           ],

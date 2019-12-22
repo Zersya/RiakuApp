@@ -36,7 +36,10 @@
   "post": {
     "createPostLabel": "Create Post",
     "hintPost": "What you want to RIA?",
-    "sendLabel": "Send"
+    "sendLabel": "Send",
+    "noCommentLabel": "No Comment",
+    "hintWriteComment": "Write Comment",
+    "addComentLabel": "Add Comment"
   },
   "success": {
     "successCreate": "Create succress",

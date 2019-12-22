@@ -53,7 +53,7 @@ class DashboardBloc extends PostHelper {
   Future<Post> likePost(Post post, int index, bool isLike) async {
     _currentList[index] = post;
     _subjectPosts.sink.add(_currentList);
-    
+
     Post _post = await super.likePost(post, index, isLike);
 
     return _post;
@@ -65,7 +65,7 @@ class DashboardBloc extends PostHelper {
 
     if (response.responseState == ResponseState.SUCCESS) {
       response.result.listen((val) {
-        _currentList = val.documents.map((v) => Post.formMap(v.data)).toList();
+        _currentList = val.documents.map((v) => Post.fromMap(v.data)).toList();
         _currentList = _currentList.reversed.toList();
 
         _subjectOnUploadIdx.sink.add(_index);

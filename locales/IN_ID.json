@@ -36,7 +36,10 @@
   "post": {
     "createPostLabel": "Buat Postingan",
     "hintPost": "Apa yang kamu RIAkan?",
-    "sendLabel": "Kirim"
+    "sendLabel": "Kirim",
+    "noCommentLabel": "Tidak ada komentar",
+    "hintWriteComment": "Tuliskan Komentar",
+    "addComentLabel": "Tambahkan Komentar"
   },
   "success": {
     "successCreate": "Berhasil terbuat",

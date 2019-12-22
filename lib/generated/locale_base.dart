@@ -99,6 +99,9 @@ class Localepost {
   String get createPostLabel => _data["createPostLabel"];
   String get hintPost => _data["hintPost"];
   String get sendLabel => _data["sendLabel"];
+  String get noCommentLabel => _data["noCommentLabel"];
+  String get hintWriteComment => _data["hintWriteComment"];
+  String get addComentLabel => _data["addComentLabel"];
 }
 class Localesuccess {
   final Map<String, String> _data;

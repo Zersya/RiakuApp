@@ -8,8 +8,9 @@ class PostHelper extends BaseReponseBloc {
 
   PostHelper(){
     _servicePost = GetIt.I<PostService>();
-    
   }
+
+  PostService get servicePost => _servicePost;
 
   Future<Post> likePost(Post post, int index, bool isLike) async {
     post.likes = List.from(post.likes);

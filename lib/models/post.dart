@@ -1,9 +1,10 @@
-import 'package:riaku_app/models/user.dart';
+import 'user.dart';
 
 class Post {
   User user;
   String id;
   List likes;
+  int countComment;
 
   final String description;
   final String imgUrl;
@@ -11,17 +12,9 @@ class Post {
   final String location;
 
   Post(this.location, this.user, this.description, this.imgUrl, this.createdAt,
-      {this.id, this.likes});
+      {this.id, this.likes, this.countComment});
 
-  void setUser(User user) {
-    this.user = user;
-  }
-
-  void addLikes(String userId) {
-    likes.add(userId);
-  }
-
-  factory Post.formMap(Map<String, dynamic> map) {
+  factory Post.fromMap(Map<String, dynamic> map) {
     return Post(
       map['location'],
       User.fromMap(map['user']),
@@ -30,6 +23,7 @@ class Post {
       map['createdAt'],
       id: map['id'],
       likes: map['likes'],
+      countComment: map['countComment']
     );
   }
 
@@ -41,5 +35,6 @@ class Post {
         'imgUrl': this.imgUrl,
         'createdAt': this.createdAt,
         'likes': this.likes ?? List(),
+        'countComment': this.countComment ?? 0
       };
 }

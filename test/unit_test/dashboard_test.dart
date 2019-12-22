@@ -78,7 +78,7 @@ void main() {
           .millisecondsSinceEpoch
           .toString();
 
-      data = bloc.isAble2Delete(Post.formMap(_post));
+      data = bloc.isAble2Delete(Post.fromMap(_post));
 
       expect(data, false);
       bloc.dispose();

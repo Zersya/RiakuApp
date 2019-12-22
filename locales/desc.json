@@ -36,7 +36,10 @@
   "post": {
     "createPostLabel": "creating post",
     "hintPost": "hint for form post",
-    "sendLabel": "label send"
+    "sendLabel": "label send",
+    "noCommentLabel": "no comment label",
+    "hintWriteComment": "Write Comment Hint",
+    "addComentLabel": "add comment label"
   },
   "success": {
     "successCreate": "success creating/adding data to form",
