@@ -68,6 +68,7 @@ void main() {
   group('Dashboard UI', () {
     test('able to delete', () async {
       DashboardBloc bloc = DashboardBloc();
+      await bloc.fetchUser();
       bool data = bloc.isAble2Delete(post);
 
       expect(data, true);

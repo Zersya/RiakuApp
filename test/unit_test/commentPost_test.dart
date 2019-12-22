@@ -152,7 +152,7 @@ void main() {
 
       when(colRef.where('docRef', isEqualTo: docRef)).thenAnswer((_) => query);
 
-      when(query.orderBy(any)).thenAnswer((_) => query);
+      when(query.orderBy(any, descending: true)).thenAnswer((_) => query);
 
       when(query.snapshots()).thenAnswer((_) => snapshots);
     }
