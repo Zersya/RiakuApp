@@ -7,7 +7,7 @@ import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
 import 'package:riaku_app/utils/funcCommon.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/helper/router.dart';
 
 class FormStatus extends StatelessWidget {
   const FormStatus({

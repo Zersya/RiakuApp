@@ -6,9 +6,9 @@ import 'package:geocoder/services/local.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:riaku_app/screens/splash/splash_screen.dart';
-import 'package:riaku_app/utils/loc_delegate.dart';
-import 'package:riaku_app/utils/locator.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/helper/loc_delegate.dart';
+import 'package:riaku_app/helper/locator.dart';
+import 'package:riaku_app/helper/router.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 void main() async {

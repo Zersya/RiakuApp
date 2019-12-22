@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/profile/profile_bloc.dart';
 import 'package:riaku_app/utils/funcCommon.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/helper/router.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);

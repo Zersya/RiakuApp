@@ -5,7 +5,7 @@ import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/geo_service.dart';
 import 'package:riaku_app/services/post_service.dart';
-import 'package:riaku_app/utils/my_response.dart';
+import 'package:riaku_app/helper/my_response.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -18,9 +18,8 @@ class CreatePostBloc extends BaseReponseBloc {
 
   Address _currentLocation = Address();
 
-  User user;
-
   CreatePostBloc() {
+    
     _servicePost = GetIt.I<PostService>();
     _geoService = GetIt.I<GeoService>();
 
@@ -38,6 +37,7 @@ class CreatePostBloc extends BaseReponseBloc {
   ValueStream<MyResponse> get responseStream => super.responseStream;
 
   Address get currentLocation => _currentLocation;
+
 
   void setConnectivity(ConnectivityResult val) {
     if (val != ConnectivityResult.none)
@@ -62,8 +62,7 @@ class CreatePostBloc extends BaseReponseBloc {
   }
 
   Future<Post> submitPost(String desc, String imgUrl, String timeEpoch) async {
-    // User user = User(email, id: id, username: username);
-    Post post = Post(_currentLocation.locality, user, desc, imgUrl, timeEpoch);
+    Post post = Post(_currentLocation.locality, super.user, desc, imgUrl, timeEpoch);
 
     MyResponse response = await _servicePost.createPost(post);
     this.subjectResponse.sink.add(response);

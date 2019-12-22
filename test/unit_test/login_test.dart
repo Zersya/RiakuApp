@@ -10,9 +10,9 @@ import 'package:mockito/mockito.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/auth/login/login_bloc.dart';
 import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/loc_delegate.dart';
-import 'package:riaku_app/utils/locator.dart';
-import 'package:riaku_app/utils/my_response.dart';
+import 'package:riaku_app/helper/loc_delegate.dart';
+import 'package:riaku_app/helper/locator.dart';
+import 'package:riaku_app/helper/my_response.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MockFirestore extends Mock implements Firestore {}

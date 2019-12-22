@@ -4,8 +4,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/loc_delegate.dart';
-import 'package:riaku_app/utils/my_response.dart';
+import 'package:riaku_app/helper/loc_delegate.dart';
+import 'package:riaku_app/helper/my_response.dart';
 
 class PostService {
   final Firestore firestore;

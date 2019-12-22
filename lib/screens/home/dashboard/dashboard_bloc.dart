@@ -4,7 +4,7 @@ import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/post_service.dart';
 import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/my_response.dart';
+import 'package:riaku_app/helper/my_response.dart';
 import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
@@ -14,23 +14,22 @@ class DashboardBloc extends BaseReponseBloc {
   PostService _servicePost;
   BehaviorSubject<List<Post>> _subjectPosts;
   BehaviorSubject<int> _subjectOnUploadIdx;
-  BehaviorSubject<User> _subjectUser;
 
   List<Post> _currentList;
   int _index;
 
-  User _user;
-
   DashboardBloc() {
+    
     _servicePost = GetIt.I<PostService>();
 
     _subjectPosts = BehaviorSubject<List<Post>>();
     _subjectOnUploadIdx = BehaviorSubject<int>();
-    _subjectUser = BehaviorSubject<User>();
 
     _currentList = List();
 
     _index = 0;
+
+    
   }
 
   @override
@@ -39,10 +38,6 @@ class DashboardBloc extends BaseReponseBloc {
   ValueStream<List<Post>> get postsStream => _subjectPosts.stream;
 
   ValueStream<int> get onUploadIdxStream => _subjectOnUploadIdx.stream;
-
-  ValueStream<User> get userStream => _subjectUser.stream;
-
-  User get user => _user;
 
   void setListData(Post post) {
     _currentList.add(post);
@@ -63,9 +58,9 @@ class DashboardBloc extends BaseReponseBloc {
     post.likes = List.from(post.likes);
 
     if (isLike) {
-      post.likes.add(_user.id);
+      post.likes.add(super.user.id);
     } else {
-      post.likes.removeWhere((like) => like == _user.id);
+      post.likes.removeWhere((like) => like == super.user.id);
     }
     _currentList[index] = post;
     _subjectPosts.sink.add(_currentList);
@@ -77,7 +72,7 @@ class DashboardBloc extends BaseReponseBloc {
   int yourLike(Post post) {
     int counter = 0;
     post.likes?.forEach((str) {
-      if (str == _user.id) counter = counter + 1;
+      if (str == super.user.id) counter = counter + 1;
     });
     return counter;
   }
@@ -93,8 +88,8 @@ class DashboardBloc extends BaseReponseBloc {
     DateTime dateTime =
         DateTime.fromMillisecondsSinceEpoch(int.parse(post.createdAt));
 
-    bool data = (dateTime.difference(DateTime.now()).inMinutes.abs() <
-        delayTimeMinute);
+    bool data =
+        (dateTime.difference(DateTime.now()).inMinutes.abs() < delayTimeMinute);
     return data;
   }
 
@@ -113,23 +108,10 @@ class DashboardBloc extends BaseReponseBloc {
     }
   }
 
-  Future<User> fetchUser() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String email = pref.getString(kEmailKey);
-    String id = pref.getString(kIdKey);
-    String username = pref.getString(kUsernameKey);
-
-    _user = User(email, id: id, username: username);
-    _subjectUser.sink.add(_user);
-
-    return _user;
-  }
-
   @override
   void dispose() {
     super.dispose();
     _subjectPosts.close();
     _subjectOnUploadIdx.close();
-    _subjectUser.close();
   }
 }

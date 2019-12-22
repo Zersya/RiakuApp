@@ -178,8 +178,8 @@ class ItemPost extends StatelessWidget {
                       ),
                   ],
                 ),
-                // Text('100 ${loc.dashboard.commentsLabel}',
-                //     style: Theme.of(context).textTheme.overline)
+                Text('100 ${loc.dashboard.commentsLabel}',
+                    style: Theme.of(context).textTheme.overline)
               ],
             ),
           ),
@@ -194,25 +194,43 @@ class ItemPost extends StatelessWidget {
               children: <Widget>[
                 Expanded(
                     flex: 1,
-                    child: InkWell(
-                      onTap: () {
-                        _dashboardBloc.likePost(post, index, true);
-                      },
-                      onLongPress: () {
-                        _dashboardBloc.likePost(post, index, false);
-                      },
-                      child: Icon(
-                        FontAwesomeIcons.signLanguage,
-                        color: myLike > 0
-                            ? Theme.of(context).colorScheme.primaryVariant
-                            : Colors.grey,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border:
+                              Border(right: BorderSide(color: Colors.grey))),
+                      child: InkWell(
+                        onTap: () {
+                          _dashboardBloc.likePost(post, index, true);
+                        },
+                        onLongPress: () {
+                          _dashboardBloc.likePost(post, index, false);
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.signLanguage,
+                          color: myLike > 0
+                              ? Theme.of(context).colorScheme.primaryVariant
+                              : Colors.grey,
+                        ),
                       ),
                     )),
-                // Expanded(
-                //     flex: 1,
-                //     child: Icon(
-                //       Icons.comment,
-                //     ))
+                Expanded(
+                    flex: 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          border: Border(left: BorderSide(color: Colors.grey))),
+                      child: InkWell(
+                        onTap: () {
+                          _dashboardBloc.likePost(post, index, true);
+                        },
+                        onLongPress: () {
+                          _dashboardBloc.likePost(post, index, false);
+                        },
+                        child: Icon(
+                          FontAwesomeIcons.solidComment,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    )),
               ],
             ),
           )

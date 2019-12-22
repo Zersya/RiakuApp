@@ -4,7 +4,7 @@ import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/screens/auth/login/login_screen.dart';
 import 'package:riaku_app/screens/auth/register/register_screen.dart';
 import 'package:riaku_app/utils/enum.dart';
-import 'package:riaku_app/utils/router.dart';
+import 'package:riaku_app/helper/router.dart';
 
 import 'login/login_bloc.dart';
 import 'register/register_bloc.dart';
