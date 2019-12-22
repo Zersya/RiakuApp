@@ -12,6 +12,7 @@ import 'package:timeago/timeago.dart' as timeago;
 class ItemPost extends StatelessWidget {
   const ItemPost(
       {Key key,
+      @required this.index,
       @required this.user,
       @required this.post,
       @required this.isUpload})
@@ -20,6 +21,7 @@ class ItemPost extends StatelessWidget {
   final Post post;
   final User user;
   final bool isUpload;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +148,10 @@ class ItemPost extends StatelessWidget {
                     flex: 1,
                     child: InkWell(
                       onTap: () {
-                        _dashboardBloc.likePost(post);
+                        _dashboardBloc.likePost(post, index, true);
+                      },
+                      onLongPress: (){
+                        _dashboardBloc.likePost(post, index, false);
                       },
                       child: Icon(
                         FontAwesomeIcons.signLanguage,

@@ -59,15 +59,17 @@ class DashboardBloc extends BaseReponseBloc {
     _subjectOnUploadIdx.sink.add(_index);
   }
 
-  Future likePost(Post post) async {
+  Future likePost(Post post, int index, bool isLike) async {
     post.likes = List.from(post.likes);
-    post.likes.add(_user.id);
-    _currentList.firstWhere((val) {
-      if (val.id == post.id) val.likes = post.likes;
-      return val.id == post.id;
-    });
+
+    if (isLike) {
+      post.likes.add(_user.id);
+    } else {
+      post.likes.removeWhere((like) => like == _user.id);
+    }
+    _currentList[index] = post;
     _subjectPosts.sink.add(_currentList);
-    
+
     MyResponse response = await _servicePost.likePost(post);
     this.subjectResponse.sink.add(response);
   }

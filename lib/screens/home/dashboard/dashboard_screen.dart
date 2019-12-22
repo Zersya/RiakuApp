@@ -89,6 +89,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             return Provider.value(
                               value: _dashboardBloc,
                               child: ItemPost(
+                                index: index,
                                   isUpload: index < snapshot.data,
                                   user: currentList[index].user,
                                   post: currentList[index]),

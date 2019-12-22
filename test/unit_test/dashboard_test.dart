@@ -140,7 +140,21 @@ void main() {
 
       stubCreateLike();
 
-      await bloc.likePost(post);
+      await bloc.likePost(post, 0, true);
+      MyResponse response = bloc.subjectResponse.stream.value;
+
+      expect(response.message, LocDelegate.currentLoc.success.successCreate);
+    });
+
+    test('unlike post', () async {
+      DashboardBloc bloc = DashboardBloc();
+
+      await bloc.fetchUser();
+      bloc.setListData(post);
+
+      stubCreateLike();
+
+      await bloc.likePost(post, 0, false);
       MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.message, LocDelegate.currentLoc.success.successCreate);
@@ -154,7 +168,7 @@ void main() {
 
       stubCreateLikeErr(Exception(LocDelegate.currentLoc.error.exceptionError));
 
-      await bloc.likePost(post);
+      await bloc.likePost(post, 0, true);
       MyResponse response = bloc.subjectResponse.stream.value;
 
       expect(response.responseState, ResponseState.ERROR);
@@ -170,7 +184,7 @@ void main() {
       stubCreateLikeErr(
           SocketException(LocDelegate.currentLoc.error.connectionError));
 
-      await bloc.likePost(post);
+      await bloc.likePost(post, 0, true);
       MyResponse response = bloc.subjectResponse.stream.value;
       
       expect(response.responseState, ResponseState.ERROR);

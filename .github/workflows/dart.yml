@@ -1,5 +1,5 @@
 on: push
-name: Test, Build and Release apk
+name: Testing
 jobs:
   test:
     name: Test on ${{ matrix.os }}
