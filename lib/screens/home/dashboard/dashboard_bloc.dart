@@ -1,16 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
+import 'package:riaku_app/helper/postHelper.dart';
 import 'package:riaku_app/models/post.dart';
-import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/post_service.dart';
 import 'package:riaku_app/utils/enum.dart';
 import 'package:riaku_app/helper/my_response.dart';
-import 'package:riaku_app/utils/strKey.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class DashboardBloc extends BaseReponseBloc {
+class DashboardBloc extends PostHelper {
   PostService _servicePost;
   BehaviorSubject<List<Post>> _subjectPosts;
   BehaviorSubject<int> _subjectOnUploadIdx;
@@ -19,7 +17,6 @@ class DashboardBloc extends BaseReponseBloc {
   int _index;
 
   DashboardBloc() {
-    
     _servicePost = GetIt.I<PostService>();
 
     _subjectPosts = BehaviorSubject<List<Post>>();
@@ -28,8 +25,6 @@ class DashboardBloc extends BaseReponseBloc {
     _currentList = List();
 
     _index = 0;
-
-    
   }
 
   @override
@@ -54,43 +49,14 @@ class DashboardBloc extends BaseReponseBloc {
     _subjectOnUploadIdx.sink.add(_index);
   }
 
-  Future likePost(Post post, int index, bool isLike) async {
-    post.likes = List.from(post.likes);
-
-    if (isLike) {
-      post.likes.add(super.user.id);
-    } else {
-      post.likes.removeWhere((like) => like == super.user.id);
-    }
+  @override
+  Future<Post> likePost(Post post, int index, bool isLike) async {
     _currentList[index] = post;
     _subjectPosts.sink.add(_currentList);
+    
+    Post _post = await super.likePost(post, index, isLike);
 
-    MyResponse response = await _servicePost.likePost(post);
-    this.subjectResponse.sink.add(response);
-  }
-
-  int yourLike(Post post) {
-    int counter = 0;
-    post.likes?.forEach((str) {
-      if (str == super.user.id) counter = counter + 1;
-    });
-    return counter;
-  }
-
-  Future deletePost(Post post) async {
-    MyResponse response = await _servicePost.deletePost(post);
-    this.subjectResponse.sink.add(response);
-  }
-
-  bool isAble2Delete(Post post) {
-    int delayTimeMinute = 10;
-
-    DateTime dateTime =
-        DateTime.fromMillisecondsSinceEpoch(int.parse(post.createdAt));
-
-    bool data =
-        (dateTime.difference(DateTime.now()).inMinutes.abs() < delayTimeMinute);
-    return data;
+    return _post;
   }
 
   Future fetchPost() async {

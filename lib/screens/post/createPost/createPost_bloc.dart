@@ -2,7 +2,6 @@ import 'package:connectivity/connectivity.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:get_it/get_it.dart';
 import 'package:riaku_app/models/post.dart';
-import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/services/geo_service.dart';
 import 'package:riaku_app/services/post_service.dart';
 import 'package:riaku_app/helper/my_response.dart';

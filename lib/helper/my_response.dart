@@ -31,12 +31,6 @@ class BaseReponseBloc<T> {
   ValueStream<T> get stateStream => subjectState.stream;
   ValueStream<User> get userStream => subjectUser.stream;
 
-  void dispose() {
-    subjectResponse.close();
-    subjectState.close();
-    subjectUser.close();
-  }
-
   Future<User> fetchUser() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String email = pref.getString(kEmailKey);
@@ -47,5 +41,11 @@ class BaseReponseBloc<T> {
     subjectUser.sink.add(user);
 
     return user;
+  }
+
+  void dispose() {
+    subjectResponse.close();
+    subjectState.close();
+    subjectUser.close();
   }
 }

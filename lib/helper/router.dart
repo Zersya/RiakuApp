@@ -4,16 +4,17 @@ import 'package:riaku_app/screens/auth/login/login_screen.dart';
 import 'package:riaku_app/screens/auth/register/register_screen.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_screen.dart';
 import 'package:riaku_app/screens/home/home_screen.dart';
+import 'package:riaku_app/screens/post/detailPost/detailPost_screen.dart';
 import 'package:riaku_app/screens/splash/splash_screen.dart';
 
 class Router {
   static const kRouteSplash = '/splash';
   static const kRouteHome = '/home';
   static const kRouteAddPost = '/home/addStatus';
+  static const kRouteDetailPost = '/home/detailPost';
   static const kRouteRegister = '/register';
   static const kRouteLogin = '/login';
   static const kRouteAuth = '/auth';
-
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     print(settings.name);
@@ -28,11 +29,18 @@ class Router {
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case kRouteHome:
         return MaterialPageRoute(builder: (_) => HomeScreen());
+      case kRouteDetailPost:
+        return MaterialPageRoute(
+          builder: (_) => DetailPostScreen(
+            post: settings.arguments,
+          ),
+        );
       case kRouteAddPost:
         return MaterialPageRoute(
-            builder: (_) => CreatePostScreen(
-                  createPostBloc: settings.arguments,
-                ));
+          builder: (_) => CreatePostScreen(
+            createPostBloc: settings.arguments,
+          ),
+        );
       default:
         return MaterialPageRoute(builder: (_) => HomeScreen());
     }

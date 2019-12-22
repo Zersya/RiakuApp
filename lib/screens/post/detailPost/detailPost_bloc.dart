@@ -1,23 +1,24 @@
-import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/utils/strKey.dart';
+import 'package:riaku_app/helper/postHelper.dart';
+import 'package:riaku_app/models/post.dart';
+import 'package:riaku_app/screens/post/detailPost/detailPost_screen.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-class DetailBloc{
-  User _user;
-  BehaviorSubject<User> _subjectUser;
-
-
-
-  Future<User> fetchUser() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    String email = pref.getString(kEmailKey);
-    String id = pref.getString(kIdKey);
-    String username = pref.getString(kUsernameKey);
-
-    _user = User(email, id: id, username: username);
-    _subjectUser.sink.add(_user);
-
-    return _user;
+import 'package:rxdart/subjects.dart';
+class DetailPostBloc extends PostHelper{
+  BehaviorSubject<Post> _subjectPost;
+  
+  DetailPostBloc(){
+    _subjectPost = BehaviorSubject<Post>();
   }
+
+  ValueStream<Post> get postStream => _subjectPost.stream;
+
+  @override
+  Future<Post> likePost(Post post, int index, bool isLike) async {
+    _subjectPost.sink.add(post);
+    
+    Post _post = await super.likePost(post, index, isLike);
+
+    return _post;
+  }
+
 }

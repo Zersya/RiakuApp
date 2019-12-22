@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:riaku_app/generated/locale_base.dart';
+import 'package:riaku_app/helper/router.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
-import 'package:riaku_app/screens/home/dashboard/widgets/itemPost.dart';
+import 'package:riaku_app/widgets/itemPost.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -89,8 +90,10 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return ShimmerLoading();
                     List<Post> currentList = snapshot.data;
-                    if(currentList.isEmpty){
-                      return Center(child: Text(loc.common.emptyPosts),);
+                    if (currentList.isEmpty) {
+                      return Center(
+                        child: Text(loc.common.emptyPosts),
+                      );
                     }
                     return ListView.separated(
                       physics: ScrollPhysics(),
@@ -110,11 +113,18 @@ class _DashboardScreenState extends State<DashboardScreen> {
                               if (!snapshot.hasData) return ShimmerLoading();
                               return Provider.value(
                                 value: _dashboardBloc,
-                                child: ItemPost(
-                                    index: index,
-                                    isUpload: index < snapshot.data,
-                                    user: currentList[index].user,
-                                    post: currentList[index]),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(
+                                        Router.kRouteDetailPost,
+                                        arguments: currentList[index]);
+                                  },
+                                  child: ItemPost(
+                                      postHelper: _dashboardBloc,
+                                      index: index,
+                                      isUpload: index < snapshot.data,
+                                      post: currentList[index]),
+                                ),
                               );
                             });
                       },
