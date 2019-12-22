@@ -23,6 +23,31 @@ class ItemPost extends StatelessWidget {
   final bool isUpload;
   final int index;
 
+  void _settingModalBottomSheet(context) {
+    final loc = Localizations.of<LocaleBase>(context, LocaleBase);
+    final DashboardBloc _dashboardBloc = Provider.of<DashboardBloc>(context);
+
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc) {
+          return SafeArea(
+            child: Container(
+              child: new Wrap(
+                children: <Widget>[
+                  new ListTile(
+                      leading: new Icon(Icons.delete),
+                      title: new Text(loc.common.delete),
+                      onTap: () {
+                        _dashboardBloc.deletePost(post);
+                        Navigator.pop(context);
+                      }),
+                ],
+              ),
+            ),
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final loc = Localizations.of<LocaleBase>(context, LocaleBase);
@@ -70,9 +95,32 @@ class ItemPost extends StatelessWidget {
                 ),
                 Expanded(
                   child: ListTile(
-                    title: Text(
-                      user.username,
-                      style: Theme.of(context).textTheme.subhead,
+                    title: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Text(
+                            user.username,
+                            style: Theme.of(context).textTheme.subhead,
+                          ),
+                          if (_dashboardBloc.isAble2Delete(post))
+                            Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                splashColor:
+                                    Theme.of(context).colorScheme.onSurface,
+                                onTap: () {
+                                  _settingModalBottomSheet(context);
+                                },
+                                child: Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Icon(Icons.more_horiz)),
+                              ),
+                            )
+                        ],
+                      ),
                     ),
                     subtitle: Wrap(
                       direction: Axis.horizontal,
@@ -150,7 +198,7 @@ class ItemPost extends StatelessWidget {
                       onTap: () {
                         _dashboardBloc.likePost(post, index, true);
                       },
-                      onLongPress: (){
+                      onLongPress: () {
                         _dashboardBloc.likePost(post, index, false);
                       },
                       child: Icon(

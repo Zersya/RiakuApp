@@ -6,7 +6,9 @@
   },
   "common": {
     "back": "Kembali",
-    "uploading": "Mengunggah"
+    "uploading": "Mengunggah",
+    "delete": "Hapus",
+    "emptyPosts": "Tidak ada Post"
   },
   "dashboard": {
     "dashboard": "Beranda",

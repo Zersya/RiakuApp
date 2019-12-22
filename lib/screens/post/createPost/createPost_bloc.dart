@@ -55,8 +55,10 @@ class CreatePostBloc extends BaseReponseBloc {
   }
 
   Future fetchLocation() async {
-   List<Address> addresses = await _geoService.fetchLocation();
-    _currentLocation = addresses.first;
+    try {
+      List<Address> addresses = await _geoService.fetchLocation();
+      _currentLocation = addresses.first;
+    } catch (err) {}
   }
 
   Future<Post> submitPost(String desc, String imgUrl, String timeEpoch) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/home/dashboard/widgets/formPost.dart';
@@ -24,6 +25,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
   RefreshController _refreshController =
       RefreshController(initialRefresh: false);
 
+  ScrollController _scrollController = ScrollController(initialScrollOffset: 0);
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +38,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
       ));
     });
-    _dashboardBloc.fetchData();
+    _dashboardBloc.fetchPost();
     _dashboardBloc.fetchUser().then((val) {
       _createPostBloc.user = val;
     });
@@ -51,16 +54,21 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final loc = Localizations.of<LocaleBase>(context, LocaleBase);
+
     return Scaffold(
       key: _scaffoldKey,
       body: SmartRefresher(
         header: ClassicHeader(),
         controller: _refreshController,
         onRefresh: () async {
-          await _dashboardBloc.fetchData();
+          await _dashboardBloc.fetchPost();
+          await Future.delayed(Duration(milliseconds: 500));
           _refreshController.refreshCompleted();
         },
+        scrollController: _scrollController,
         child: SingleChildScrollView(
+          controller: _scrollController,
           physics: ScrollPhysics(),
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -84,6 +92,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   builder: (context, snapshot) {
                     if (!snapshot.hasData) return ShimmerLoading();
                     List<Post> currentList = snapshot.data;
+                    if(currentList.isEmpty){
+                      return Center(child: Text(loc.common.emptyPosts),);
+                    }
                     return ListView.separated(
                       physics: ScrollPhysics(),
                       shrinkWrap: true,

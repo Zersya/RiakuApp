@@ -6,7 +6,9 @@
   },
   "common": {
     "back": "Back",
-    "uploading": "Uploading"
+    "uploading": "Uploading",
+    "delete": "Delete",
+    "emptyPosts": "Posts are empty"
   },
   "dashboard": {
     "dashboard": "Dashboard",

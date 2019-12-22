@@ -82,7 +82,23 @@ class DashboardBloc extends BaseReponseBloc {
     return counter;
   }
 
-  Future fetchData() async {
+  Future deletePost(Post post) async {
+    MyResponse response = await _servicePost.deletePost(post);
+    this.subjectResponse.sink.add(response);
+  }
+
+  bool isAble2Delete(Post post) {
+    int delayTimeMinute = 10;
+
+    DateTime dateTime =
+        DateTime.fromMillisecondsSinceEpoch(int.parse(post.createdAt));
+
+    bool data = (dateTime.difference(DateTime.now()).inMinutes.abs() <
+        delayTimeMinute);
+    return data;
+  }
+
+  Future fetchPost() async {
     MyResponse<Stream<QuerySnapshot>> response = await _servicePost.fetchPost();
     this.subjectResponse.sink.add(response);
 

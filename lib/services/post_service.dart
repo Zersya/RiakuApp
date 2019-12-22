@@ -31,6 +31,26 @@ class PostService {
     }
   }
 
+  Future<MyResponse> deletePost(Post post) async {
+    try {
+      
+      await firestore
+          .collection('posts')
+          .document(post.id)
+          .delete();
+
+      return MyResponse(ResponseState.SUCCESS, post,
+          message: LocDelegate.currentLoc.success.successCreate);
+    } on SocketException {
+      return MyResponse(ResponseState.ERROR, null,
+          message: LocDelegate.currentLoc.error.connectionError);
+    } on Exception {
+      return MyResponse(ResponseState.ERROR, null,
+          message: LocDelegate.currentLoc.error.exceptionError);
+    }
+  }
+
+
   Future<MyResponse> createPost(Post post) async {
     try {
       post.id = firestore.collection('posts').document().documentID;

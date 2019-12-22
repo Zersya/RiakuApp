@@ -6,7 +6,9 @@
   },
   "common": {
     "back": "back label",
-    "uploading": "uploading label"
+    "uploading": "uploading label",
+    "delete": "delete label",
+    "emptyPosts": "Posts are empty label"
   },
   "dashboard": {
     "dashboard": "dashboard label",

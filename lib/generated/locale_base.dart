@@ -57,6 +57,8 @@ class Localecommon {
 
   String get back => _data["back"];
   String get uploading => _data["uploading"];
+  String get delete => _data["delete"];
+  String get emptyPosts => _data["emptyPosts"];
 }
 class Localedashboard {
   final Map<String, String> _data;

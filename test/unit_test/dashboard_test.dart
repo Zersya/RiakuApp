@@ -60,12 +60,29 @@ void main() {
     locDelegate = LocDelegate();
     locDelegate.load(Locale('en'));
 
-    post = Post(
-        'home', User('mail@mail.com', id: 'mail@mail.com'), 'desc', null, '123',
+    post = Post('home', User('mail@mail.com', id: 'mail@mail.com'), 'desc',
+        null, DateTime.now().millisecondsSinceEpoch.toString(),
         likes: ['mail@mail.com', 'mail@mail.com']);
   });
 
   group('Dashboard UI', () {
+    test('able to delete', () async {
+      DashboardBloc bloc = DashboardBloc();
+      bool data = bloc.isAble2Delete(post);
+
+      expect(data, true);
+
+      Map<String, dynamic> _post = Map.from(post.toMap());
+      _post['createdAt'] = DateTime.now()
+          .add(Duration(minutes: 20))
+          .millisecondsSinceEpoch
+          .toString();
+
+      data = bloc.isAble2Delete(Post.formMap(_post));
+
+      expect(data, false);
+      bloc.dispose();
+    });
     test('your post likes', () async {
       DashboardBloc bloc = DashboardBloc();
       await bloc.fetchUser();
@@ -186,7 +203,7 @@ void main() {
 
       await bloc.likePost(post, 0, true);
       MyResponse response = bloc.subjectResponse.stream.value;
-      
+
       expect(response.responseState, ResponseState.ERROR);
       expect(response.message, LocDelegate.currentLoc.error.connectionError);
     });
@@ -215,7 +232,7 @@ void main() {
 
       stubDoc();
 
-      await bloc.fetchData();
+      await bloc.fetchPost();
 
       MyResponse response = bloc.subjectResponse.stream.value;
       expect(response.responseState, ResponseState.SUCCESS);
@@ -232,7 +249,7 @@ void main() {
 
       stubDocErr(Exception(LocDelegate.currentLoc.error.exceptionError));
 
-      await bloc.fetchData();
+      await bloc.fetchPost();
 
       MyResponse response = bloc.subjectResponse.stream.value;
 
@@ -250,7 +267,7 @@ void main() {
 
       stubDocErr(SocketException(LocDelegate.currentLoc.error.connectionError));
 
-      await bloc.fetchData();
+      await bloc.fetchPost();
 
       MyResponse response = bloc.subjectResponse.stream.value;
 
