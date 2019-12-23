@@ -37,130 +37,151 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Column(
-            children: <Widget>[
-              StreamBuilder<User>(
-                  stream: _detailPostBloc.userStream,
+          SingleChildScrollView(
+            physics: ScrollPhysics(),
+            child: Column(
+              children: <Widget>[
+                StreamBuilder<User>(
+                    stream: _detailPostBloc.userStream,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData)
+                        return Provider.value(
+                          value: _detailPostBloc,
+                          child: StreamBuilder<Post>(
+                              stream: _detailPostBloc.postStream,
+                              initialData: widget.post,
+                              builder: (context, snapshot) {
+                                return StreamBuilder<int>(
+                                    stream: _detailPostBloc.countCommentStrea,
+                                    initialData: 0,
+                                    builder: (context, snapshot) {
+                                      return Column(
+                                        children: <Widget>[
+                                          ItemPost(
+                                            postHelper: _detailPostBloc,
+                                            post: widget.post,
+                                            index: 0,
+                                            isUpload: false,
+                                          ),
+                                          Container(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .surface,
+                                            height: 2,
+                                          )
+                                        ],
+                                      );
+                                    });
+                              }),
+                        );
+                      return Center(child: CircularProgressIndicator());
+                    }),
+                StreamBuilder<List<Comment>>(
+                  stream: _detailPostBloc.commentsStream,
+                  initialData: List(),
                   builder: (context, snapshot) {
-                    if (snapshot.hasData)
-                      return Provider.value(
-                        value: _detailPostBloc,
-                        child: StreamBuilder<Post>(
-                            stream: _detailPostBloc.postStream,
-                            initialData: widget.post,
-                            builder: (context, snapshot) {
-                              return StreamBuilder<int>(
-                                  stream: _detailPostBloc.countCommentStrea,
-                                  initialData: 0,
-                                  builder: (context, snapshot) {
-                                    return ItemPost(
-                                      postHelper: _detailPostBloc,
-                                      post: widget.post,
-                                      index: 0,
-                                      isUpload: false,
-                                    );
-                                  });
-                            }),
-                      );
-                    return Center(child: CircularProgressIndicator());
-                  }),
-              StreamBuilder<List<Comment>>(
-                stream: _detailPostBloc.commentsStream,
-                initialData: List(),
-                builder: (context, snapshot) {
-                  if (!snapshot.hasData) {
-                    return Center(child: CircularProgressIndicator());
-                  } else {
-                    List<Comment> currentList = snapshot.data;
-                    if (currentList.isEmpty) {
-                      return Center(
-                        child: Text(loc.post.noCommentLabel),
+                    if (!snapshot.hasData) {
+                      return Center(child: CircularProgressIndicator());
+                    } else {
+                      List<Comment> currentList = snapshot.data;
+                      if (currentList.isEmpty) {
+                        return Center(
+                          child: Text(loc.post.noCommentLabel),
+                        );
+                      }
+                      return ListView.separated(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: currentList.length,
+                        separatorBuilder: (context, index) {
+                          return Container(
+                            height: 2,
+                            color: Theme.of(context).colorScheme.surface,
+                          );
+                        },
+                        itemBuilder: (context, index) {
+                          return Column(
+                            children: <Widget>[
+                              ListTile(
+                                isThreeLine: true,
+                                leading: CircleAvatar(
+                                  backgroundImage: CachedNetworkImageProvider(
+                                      generateAvatar(
+                                          currentList[index].user.id)),
+                                ),
+                                title: Text(
+                                  currentList[index].user.username,
+                                ),
+                                subtitle: Text(
+                                  currentList[index].message,
+                                ),
+                                trailing: Text(
+                                  timeago.format(
+                                          DateTime.fromMillisecondsSinceEpoch(
+                                              int.parse(currentList[index]
+                                                  .createdAt)),
+                                          locale: Locale.cachedLocaleString) ??
+                                      '-',
+                                  style: Theme.of(context).textTheme.subtitle,
+                                ),
+                              ),
+                            ],
+                          );
+                        },
                       );
                     }
-                    return ListView.separated(
-                      shrinkWrap: true,
-                      itemCount: currentList.length,
-                      separatorBuilder: (context, index) {
-                        return Container(
-                          height: 2,
-                          color: Theme.of(context).colorScheme.surface,
-                        );
-                      },
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: <Widget>[
-                            ListTile(
-                              isThreeLine: true,
-                              leading: CircleAvatar(
-                                backgroundImage: CachedNetworkImageProvider(
-                                    generateAvatar(currentList[index].user.id)),
-                              ),
-                              title: Text(
-                                currentList[index].user.username,
-                              ),
-                              subtitle: Text(
-                                currentList[index].message,
-                              ),
-                              trailing: Text(
-                                timeago.format(
-                                        DateTime.fromMillisecondsSinceEpoch(
-                                            int.parse(
-                                                currentList[index].createdAt)),
-                                        locale: Locale.cachedLocaleString) ??
-                                    '-',
-                                style: Theme.of(context).textTheme.subtitle,
-                              ),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-              )
-            ],
+                  },
+                ),
+                SizedBox(
+                  height: 120,
+                )
+              ],
+            ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: SafeArea(
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextField(
-                    maxLines: 2,
-                    maxLength: 120,
-                    controller: _controller,
-                    focusNode: _node,
-                    onTap: () {
-                      _detailPostBloc.subjectFocusComment.add(true);
-                    },
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(8.0),
-                        fillColor: Colors.red,
-                        hintText: loc.post.hintWriteComment,
-                        border: UnderlineInputBorder()),
-                  ),
-                  SizedBox(
-                    height: 8.0,
-                  ),
-                  StreamBuilder<bool>(
-                      stream: _detailPostBloc.focusCommentStream,
-                      initialData: false,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData && snapshot.data)
-                          return Align(
-                            alignment: Alignment.centerRight,
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 8.0),
-                              child: FlatButton(
-                                child: Text(loc.post.addComentLabel),
-                                onPressed: _addComment,
+            child: Container(
+              color: Colors.white,
+              child: SafeArea(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    TextField(
+                      maxLines: 2,
+                      maxLength: 120,
+                      controller: _controller,
+                      focusNode: _node,
+                      onTap: () {
+                        _detailPostBloc.subjectFocusComment.add(true);
+                      },
+                      decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(8.0),
+                          fillColor: Colors.red,
+                          hintText: loc.post.hintWriteComment,
+                          border: UnderlineInputBorder()),
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                    StreamBuilder<bool>(
+                        stream: _detailPostBloc.focusCommentStream,
+                        initialData: false,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData && snapshot.data)
+                            return Align(
+                              alignment: Alignment.centerRight,
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 8.0),
+                                child: FlatButton(
+                                  child: Text(loc.post.addComentLabel),
+                                  onPressed: _addComment,
+                                ),
                               ),
-                            ),
-                          );
-                        return SizedBox();
-                      })
-                ],
+                            );
+                          return SizedBox();
+                        })
+                  ],
+                ),
               ),
             ),
           ),
