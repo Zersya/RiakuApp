@@ -69,7 +69,9 @@ void main() {
   group('Post Comment', () {
     stubDocComments() {
       MockCollectionReference colRef = MockCollectionReference();
-      when(firestore.collection('comments')).thenAnswer((_) => colRef);
+      when(firestore.collection('posts')).thenAnswer((_) => colRef);
+      when(colRef.document(any)).thenAnswer((_) => docRef);
+      when(docRef.collection('comments')).thenAnswer((_) => colRef);
       when(colRef.document(any)).thenAnswer((_) => docRef);
     }
 
@@ -81,7 +83,9 @@ void main() {
 
     stubDocCommentsErr(response) {
       MockCollectionReference colRef = MockCollectionReference();
-      when(firestore.collection('comments')).thenAnswer((_) => colRef);
+      when(firestore.collection('posts')).thenAnswer((_) => colRef);
+      when(colRef.document(any)).thenAnswer((_) => docRef);
+      when(docRef.collection('comments')).thenAnswer((_) => colRef);
       when(colRef.document(any)).thenThrow(response);
     }
 
@@ -134,27 +138,37 @@ void main() {
   });
 
   group('Fetch Comment', () {
-    stubDocPosts() {
-      MockCollectionReference colRef = MockCollectionReference();
-      when(firestore.collection('posts')).thenAnswer((_) => colRef);
-      when(colRef.document(any)).thenAnswer((_) => docRef);
-    }
-
-    stubDocPostsErr(response) {
-      MockCollectionReference colRef = MockCollectionReference();
-      when(firestore.collection('posts')).thenAnswer((_) => colRef);
-      when(colRef.document(any)).thenThrow(response);
-    }
-
+   
     stubDocComments() {
       MockCollectionReference colRef = MockCollectionReference();
-      when(firestore.collection('comments')).thenAnswer((_) => colRef);
+      when(firestore.collection('posts')).thenAnswer((_) => colRef);
 
-      when(colRef.where('docRef', isEqualTo: docRef)).thenAnswer((_) => query);
+      when(colRef.document(any)).thenAnswer((_) => docRef);
 
-      when(query.orderBy(any, descending: true)).thenAnswer((_) => query);
+      when(docRef.collection('comments')).thenAnswer((_) => colRef);
+
+      when(colRef
+            .orderBy('createdAt',
+                descending: true))
+          .thenAnswer((_) => query);
 
       when(query.snapshots()).thenAnswer((_) => snapshots);
+    }
+
+    stubDocCommentsErr(response) {
+      MockCollectionReference colRef = MockCollectionReference();
+      when(firestore.collection('posts')).thenAnswer((_) => colRef);
+
+      when(colRef.document(any)).thenAnswer((_) => docRef);
+
+      when(docRef.collection('comments')).thenAnswer((_) => colRef);
+
+      when(colRef
+            .orderBy('createdAt',
+                descending: true))
+          .thenAnswer((_) => query);
+
+      when(query.snapshots()).thenThrow(response);
     }
 
     test('success', () async {
@@ -165,7 +179,6 @@ void main() {
       expect(user, isNotNull);
       expect(user.id, 'mail@mail.com');
 
-      stubDocPosts();
       stubDocComments();
 
       await bloc.fetchComment(post);
@@ -185,7 +198,7 @@ void main() {
       expect(user, isNotNull);
       expect(user.id, 'mail@mail.com');
 
-      stubDocPostsErr(Exception(LocDelegate.currentLoc.error.exceptionError));
+      stubDocCommentsErr(Exception(LocDelegate.currentLoc.error.exceptionError));
 
       await bloc.fetchComment(post);
 
@@ -205,7 +218,7 @@ void main() {
       expect(user, isNotNull);
       expect(user.id, 'mail@mail.com');
 
-      stubDocPostsErr(
+      stubDocCommentsErr(
           SocketException(LocDelegate.currentLoc.error.connectionError));
 
       await bloc.fetchComment(post);
