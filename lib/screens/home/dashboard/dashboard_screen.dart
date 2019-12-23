@@ -115,6 +115,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                 value: _dashboardBloc,
                                 child: GestureDetector(
                                   onTap: () {
+                                    _scaffoldKey.currentState
+                                        .hideCurrentSnackBar();
+
                                     Navigator.of(context).pushNamed(
                                         Router.kRouteDetailPost,
                                         arguments: currentList[index]);

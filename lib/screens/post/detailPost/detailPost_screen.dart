@@ -86,7 +86,9 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                       List<Comment> currentList = snapshot.data;
                       if (currentList.isEmpty) {
                         return Center(
-                          child: Text(loc.post.noCommentLabel),
+                          child: Padding(
+                              padding: EdgeInsets.only(top: 16.0),
+                              child: Text(loc.post.noCommentLabel)),
                         );
                       }
                       return ListView.separated(
