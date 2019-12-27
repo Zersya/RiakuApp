@@ -1,9 +1,8 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/profile/profile_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
 import 'package:riaku_app/helper/router.dart';
+import 'package:riaku_app/widgets/avatarWIdget.dart';
 
 class ProfileScreen extends StatefulWidget {
   ProfileScreen({Key key}) : super(key: key);
@@ -37,10 +36,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              CircleAvatar(
+              AvatarWidget(
+                url: snapshot.data.id,
                 radius: 32,
-                backgroundImage: CachedNetworkImageProvider(
-                    generateAvatar(snapshot.data.id)),
               ),
               SizedBox(
                 height: 16.0,

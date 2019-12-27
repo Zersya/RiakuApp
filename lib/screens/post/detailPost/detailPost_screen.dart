@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:riaku_app/generated/locale_base.dart';
@@ -6,7 +5,7 @@ import 'package:riaku_app/models/comment.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/post/detailPost/detailPost_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:riaku_app/widgets/avatarWIdget.dart';
 import 'package:riaku_app/widgets/itemPost.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
@@ -106,10 +105,9 @@ class _DetailPostScreenState extends State<DetailPostScreen> {
                             children: <Widget>[
                               ListTile(
                                 isThreeLine: true,
-                                leading: CircleAvatar(
-                                  backgroundImage: CachedNetworkImageProvider(
-                                      generateAvatar(
-                                          currentList[index].user.id)),
+                                leading: AvatarWidget(
+                                  url: currentList[index].user.id,
+                                  radius: null,
                                 ),
                                 title: Text(
                                   currentList[index].user.username,

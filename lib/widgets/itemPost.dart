@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:riaku_app/generated/locale_base.dart';
 import 'package:riaku_app/helper/postHelper.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:riaku_app/widgets/avatarWIdget.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ItemPost extends StatelessWidget {
@@ -68,10 +67,7 @@ class ItemPost extends StatelessWidget {
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
               child: Row(
                 children: <Widget>[
-                  CircleAvatar(
-                    backgroundImage:
-                        CachedNetworkImageProvider(generateAvatar(user.id)),
-                  ),
+                  AvatarWidget(url: user.id, radius: null,),
                   Expanded(
                     child: ListTile(
                       title: Padding(

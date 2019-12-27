@@ -1,13 +1,12 @@
 import 'dart:async';
 import 'dart:io' show Platform;
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:riaku_app/generated/locale_base.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
+import 'package:riaku_app/widgets/avatarWIdget.dart';
 
 class CreatePostScreen extends StatefulWidget {
   CreatePostScreen({Key key, @required this.createPostBloc}) : super(key: key);
@@ -124,10 +123,10 @@ class FormStatus extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              CircleAvatar(
-                backgroundImage: CachedNetworkImageProvider(
-                    generateAvatar(createPostBloc.user.id)),
-              ),
+              AvatarWidget(
+                                  url: createPostBloc.user.id,
+                                  radius: null,
+                                ),
               SizedBox(width: 16),
               Text(
                 createPostBloc.user.username,

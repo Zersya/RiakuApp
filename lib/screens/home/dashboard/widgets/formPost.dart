@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:riaku_app/generated/locale_base.dart';
@@ -6,8 +5,8 @@ import 'package:riaku_app/models/post.dart';
 import 'package:riaku_app/models/user.dart';
 import 'package:riaku_app/screens/home/dashboard/dashboard_bloc.dart';
 import 'package:riaku_app/screens/post/createPost/createPost_bloc.dart';
-import 'package:riaku_app/utils/funcCommon.dart';
 import 'package:riaku_app/helper/router.dart';
+import 'package:riaku_app/widgets/avatarWIdget.dart';
 
 class FormStatus extends StatelessWidget {
   const FormStatus({
@@ -30,10 +29,10 @@ class FormStatus extends StatelessWidget {
                   stream: _dashboardBloc.userStream,
                   builder: (context, snapshot) {
                     if (snapshot.hasData)
-                      return CircleAvatar(
-                        backgroundImage:
-                            CachedNetworkImageProvider(generateAvatar(snapshot.data.id)),
-                      );
+                      return AvatarWidget(
+                                  url: snapshot.data.id,
+                                  radius: null,
+                                );
                     return Container();
                   }),
               SizedBox(width: 16),

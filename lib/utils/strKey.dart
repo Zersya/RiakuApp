@@ -2,4 +2,5 @@ const String kIdKey = 'ID';
 const String kUsernameKey = 'USERNAME';
 const String kEmailKey = 'EMAIL';
 
-const String kAdorableAvatarURL = 'https://api.adorable.io/avatars/285/';
+const String kAdorableAvatarURL = 'https://avatars.dicebear.com/v2/human/';
+const String kAdorableAvatarURL_End = '.svg?options[mood][]=happy';
